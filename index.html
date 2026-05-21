@@ -6,7 +6,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>Arrecife — Simulación de Partida</title>
+<title>Arrecife — Simulación</title>
 
 <style>
 
@@ -17,13 +17,19 @@
 }
 
 body{
+
   background:#000;
+
   color:white;
+
   font-family:Arial,sans-serif;
-  overflow-x:hidden;
-  min-height:100vh;
-  padding:40px 20px 120px;
+
+  overflow:hidden;
+
+  height:100vh;
+
   position:relative;
+
 }
 
 /* =========================
@@ -34,35 +40,38 @@ body{
   position:fixed;
   inset:0;
   overflow:hidden;
-  z-index:0;
   pointer-events:none;
 }
 
 .wave{
+
   position:absolute;
+
   width:220%;
   height:220%;
+
   left:-60%;
   top:-60%;
 
   background:
     radial-gradient(
       circle at center,
-      rgba(126,231,255,0.045),
+      rgba(126,231,255,0.04),
       transparent 60%
     );
 
-  animation:rotateWave 50s linear infinite;
+  animation:rotateWave 60s linear infinite;
+
 }
 
 .wave2{
-  animation-duration:80s;
+  animation-duration:90s;
   opacity:0.45;
-  transform:scale(1.3);
+  transform:scale(1.25);
 }
 
 .wave3{
-  animation-duration:110s;
+  animation-duration:120s;
   opacity:0.2;
   transform:scale(1.5);
 }
@@ -79,12 +88,15 @@ body{
 
 }
 
+/* =========================
+   CRIATURAS
+========================= */
+
 .deep-sea{
   position:fixed;
   inset:0;
   overflow:hidden;
   pointer-events:none;
-  z-index:0;
 }
 
 .creature{
@@ -92,58 +104,43 @@ body{
   position:absolute;
 
   border:
-    1px solid rgba(126,231,255,0.18);
+    1px solid rgba(126,231,255,0.16);
 
-  opacity:0.18;
-
-  filter:blur(0.5px);
+  border-radius:50%;
 
   box-shadow:
-    0 0 18px rgba(126,231,255,0.12),
-    0 0 50px rgba(126,231,255,0.06);
+    0 0 30px rgba(126,231,255,0.08);
+
+  opacity:0.16;
+
+  filter:blur(0.5px);
 
 }
 
 .creature1{
-  width:520px;
+  width:600px;
   height:170px;
-  border-radius:50%;
-  left:-700px;
   top:18%;
-  animation:swim1 65s linear infinite;
+  left:-700px;
+  animation:swim1 80s linear infinite;
 }
 
 .creature2{
-  width:300px;
-  height:300px;
-  border-radius:35%;
-  right:-400px;
-  top:70%;
-  transform:rotate(45deg);
-  animation:swim2 90s linear infinite;
-}
-
-.creature3{
-  width:700px;
-  height:120px;
-  border-radius:50%;
-  left:-900px;
-  top:78%;
-  animation:swim3 110s linear infinite;
+  width:380px;
+  height:380px;
+  top:65%;
+  right:-450px;
+  animation:swim2 120s linear infinite;
 }
 
 @keyframes swim1{
 
   from{
-    transform:
-      translateX(0)
-      rotate(0deg);
+    transform:translateX(0);
   }
 
   to{
-    transform:
-      translateX(2600px)
-      rotate(6deg);
+    transform:translateX(3000px);
   }
 
 }
@@ -151,175 +148,89 @@ body{
 @keyframes swim2{
 
   from{
-    transform:
-      translateX(0)
-      rotate(45deg);
+    transform:translateX(0) rotate(0deg);
   }
 
   to{
-    transform:
-      translateX(-2600px)
-      rotate(80deg);
-  }
-
-}
-
-@keyframes swim3{
-
-  from{
-    transform:
-      translateX(0);
-  }
-
-  to{
-    transform:
-      translateX(3000px);
+    transform:translateX(-3000px) rotate(80deg);
   }
 
 }
 
 /* =========================
-   CONTENIDO
+   HUD
 ========================= */
 
-.container{
-  position:relative;
-  z-index:2;
-  max-width:1400px;
-  margin:auto;
+.top-ui{
+
+  position:absolute;
+
+  top:25px;
+  left:50%;
+
+  transform:translateX(-50%);
+
+  text-align:center;
+
+  z-index:5;
+
 }
 
 .logo{
-  text-align:center;
+
   letter-spacing:10px;
+
+  font-size:11px;
+
   opacity:0.45;
-  font-size:12px;
-  margin-bottom:20px;
+
+  margin-bottom:18px;
+
 }
 
 h1{
-  text-align:center;
+
+  font-size:34px;
+
   font-weight:normal;
-  margin-bottom:12px;
-  font-size:42px;
+
+  margin-bottom:10px;
+
 }
 
 .sub{
-  text-align:center;
+
   opacity:0.45;
-  margin-bottom:60px;
-  line-height:1.8;
-  font-size:14px;
-}
-
-/* =========================
-   STATUS
-========================= */
-
-.status{
-
-  display:flex;
-  justify-content:center;
-  gap:20px;
-  flex-wrap:wrap;
-
-  margin-bottom:50px;
-
-}
-
-.status-box{
-
-  border:1px solid rgba(255,255,255,0.08);
-
-  padding:18px 25px;
-
-  min-width:180px;
-
-  text-align:center;
-
-  background:rgba(255,255,255,0.02);
-
-  backdrop-filter:blur(6px);
-
-}
-
-.status-box h3{
-
-  font-size:11px;
-  letter-spacing:3px;
-  opacity:0.45;
-  margin-bottom:12px;
-  font-weight:normal;
-
-}
-
-.status-box p{
-  font-size:24px;
-}
-
-/* =========================
-   JUGADORES
-========================= */
-
-.players{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(auto-fit,minmax(320px,1fr));
-
-  gap:25px;
-
-  margin-bottom:60px;
-
-}
-
-.player{
-
-  border:1px solid rgba(255,255,255,0.08);
-
-  padding:25px;
-
-  background:rgba(255,255,255,0.03);
-
-  backdrop-filter:blur(6px);
-
-  position:relative;
-
-  overflow:hidden;
-
-}
-
-.player.you{
-  border-color:rgba(126,231,255,0.35);
-}
-
-.player-header{
-
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-
-  margin-bottom:20px;
-
-}
-
-.player-name{
-
-  letter-spacing:3px;
-  font-size:12px;
-  opacity:0.6;
-
-}
-
-.hp{
 
   font-size:13px;
-  opacity:0.7;
+
+  line-height:1.8;
+
 }
 
-.dead{
-  opacity:0.3;
+.config{
+
+  margin-top:25px;
+
+}
+
+select{
+
+  background:#050505;
+
+  color:white;
+
+  border:
+    1px solid rgba(255,255,255,0.15);
+
+  padding:10px 16px;
+
+  font-size:13px;
+
+  letter-spacing:2px;
+
+  outline:none;
+
 }
 
 /* =========================
@@ -327,26 +238,101 @@ h1{
 ========================= */
 
 .table{
+
+  position:absolute;
+
+  inset:0;
+
   display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-bottom:22px;
-  min-height:64px;
+
+  justify-content:center;
+  align-items:center;
+
 }
 
-.played-card{
+.table-ring{
 
-  border:1px solid rgba(126,231,255,0.18);
+  position:relative;
 
-  padding:10px 14px;
+  width:700px;
+  height:700px;
 
-  background:rgba(126,231,255,0.05);
+  border-radius:50%;
 
-  min-width:58px;
+  border:
+    1px solid rgba(126,231,255,0.08);
+
+  box-shadow:
+    0 0 60px rgba(126,231,255,0.05);
+
+}
+
+/* =========================
+   JUGADORES
+========================= */
+
+.player{
+
+  position:absolute;
+
+  width:150px;
+
+  transform:
+    translate(-50%, -50%);
 
   text-align:center;
 
-  letter-spacing:1px;
+}
+
+.player-name{
+
+  letter-spacing:2px;
+
+  font-size:11px;
+
+  opacity:0.55;
+
+  margin-bottom:6px;
+
+}
+
+.player-hp{
+
+  font-size:13px;
+
+  opacity:0.75;
+
+  margin-bottom:12px;
+
+}
+
+.cards{
+
+  display:flex;
+
+  justify-content:center;
+
+  gap:8px;
+
+  flex-wrap:wrap;
+
+  min-height:42px;
+
+}
+
+.played{
+
+  border:
+    1px solid rgba(126,231,255,0.18);
+
+  background:
+    rgba(126,231,255,0.05);
+
+  padding:8px 10px;
+
+  min-width:42px;
+
+  font-size:13px;
 
   animation:fadeCard 0.5s ease;
 
@@ -367,41 +353,52 @@ h1{
 }
 
 /* =========================
-   CARTAS
+   MANO
 ========================= */
-
-.hand-title{
-  font-size:11px;
-  opacity:0.45;
-  letter-spacing:2px;
-  margin-bottom:12px;
-}
 
 .hand{
 
+  position:absolute;
+
+  bottom:35px;
+
+  left:50%;
+
+  transform:translateX(-50%);
+
   display:flex;
+
+  gap:12px;
+
   flex-wrap:wrap;
-  gap:10px;
+
+  justify-content:center;
+
+  width:90%;
+
+  z-index:6;
 
 }
 
 .card{
 
-  border:1px solid rgba(255,255,255,0.12);
+  border:
+    1px solid rgba(255,255,255,0.14);
 
-  padding:12px 14px;
-
-  cursor:pointer;
-
-  transition:0.25s;
-
-  background:rgba(255,255,255,0.02);
+  padding:14px 18px;
 
   min-width:58px;
 
   text-align:center;
 
-  user-select:none;
+  cursor:pointer;
+
+  transition:0.25s;
+
+  background:
+    rgba(255,255,255,0.02);
+
+  backdrop-filter:blur(5px);
 
 }
 
@@ -410,43 +407,46 @@ h1{
   border-color:#7ee7ff;
 
   box-shadow:
-    0 0 18px rgba(126,231,255,0.18);
+    0 0 18px rgba(126,231,255,0.15);
 
   transform:translateY(-2px);
 
 }
 
-.card.used{
-  opacity:0.25;
-  pointer-events:none;
-}
-
 /* =========================
-   BOTON
+   BOTONES
 ========================= */
 
 .controls{
-  text-align:center;
-  margin-bottom:60px;
+
+  position:absolute;
+
+  bottom:140px;
+
+  left:50%;
+
+  transform:translateX(-50%);
+
+  z-index:6;
+
 }
 
 button{
 
   background:transparent;
 
-  border:1px solid rgba(255,255,255,0.2);
-
   color:white;
 
-  padding:16px 40px;
+  border:
+    1px solid rgba(255,255,255,0.18);
+
+  padding:14px 34px;
 
   letter-spacing:3px;
 
   cursor:pointer;
 
   transition:0.3s;
-
-  font-size:12px;
 
 }
 
@@ -457,7 +457,7 @@ button:hover{
   color:black;
 
   box-shadow:
-    0 0 25px rgba(126,231,255,0.25);
+    0 0 24px rgba(126,231,255,0.2);
 
 }
 
@@ -465,78 +465,104 @@ button:hover{
    RESULTADO
 ========================= */
 
-.resultado{
+.result{
 
-  max-width:900px;
-  margin:auto;
+  position:absolute;
 
-  border-top:
-    1px solid rgba(255,255,255,0.08);
+  top:50%;
 
-  padding-top:50px;
+  left:50%;
 
-}
+  transform:
+    translate(-50%, -50%);
 
-.bloque{
-  margin-bottom:35px;
-}
+  width:420px;
 
-.bloque h2{
+  text-align:center;
 
-  font-size:12px;
+  z-index:7;
 
-  font-weight:normal;
-
-  letter-spacing:4px;
-
-  opacity:0.45;
-
-  margin-bottom:12px;
+  pointer-events:none;
 
 }
 
-.bloque p{
-  font-size:22px;
-  line-height:1.8;
-}
-
-.evento{
-
-  margin-top:20px;
-
-  margin-bottom:35px;
-
-  padding:20px;
+.result-box{
 
   border:
     1px solid rgba(126,231,255,0.18);
 
   background:
-    rgba(126,231,255,0.05);
+    rgba(0,0,0,0.82);
 
-  box-shadow:
-    0 0 20px rgba(126,231,255,0.08);
+  padding:28px;
+
+  backdrop-filter:blur(10px);
+
+  animation:fadeIn 0.6s ease;
+
+}
+
+.result-title{
+
+  font-size:11px;
+
+  letter-spacing:4px;
+
+  opacity:0.45;
+
+  margin-bottom:18px;
+
+}
+
+.result-text{
+
+  font-size:24px;
+
+  line-height:1.7;
+
+}
+
+.event{
+
+  margin-top:20px;
+
+  font-size:14px;
+
+  opacity:0.75;
+
+}
+
+@keyframes fadeIn{
+
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 
 }
 
 .final{
 
-  text-align:center;
+  font-size:32px;
 
-  font-size:34px;
+  letter-spacing:4px;
 
   opacity:0.7;
 
-  margin-top:80px;
-
-  letter-spacing:3px;
-
 }
 
-@media(max-width:700px){
+@media(max-width:900px){
 
-  h1{
-    font-size:30px;
+  .table-ring{
+
+    width:520px;
+    height:520px;
+
   }
 
 }
@@ -559,55 +585,57 @@ button:hover{
 
   <div class="creature creature1"></div>
   <div class="creature creature2"></div>
-  <div class="creature creature3"></div>
 
 </div>
 
-<div class="container">
+<div class="top-ui">
 
   <div class="logo">
     ARRECIFE
   </div>
 
-  <h1>Simulación de Partida</h1>
+  <h1>Simulación</h1>
 
   <div class="sub">
-    Interpretá al grupo.<br>
-    El mar observa todo.
+    Observá cómo se mueve el grupo.
   </div>
 
-  <div class="status">
+  <div class="config">
 
-    <div class="status-box">
-      <h3>RONDA</h3>
-      <p id="round">1</p>
-    </div>
+    <select id="playerCount">
 
-    <div class="status-box">
-      <h3>FASE</h3>
-      <p id="phase">1 / 3</p>
-    </div>
+      <option value="3">3 jugadores</option>
+      <option value="4">4 jugadores</option>
+      <option value="5" selected>5 jugadores</option>
+      <option value="6">6 jugadores</option>
+      <option value="7">7 jugadores</option>
 
-    <div class="status-box">
-      <h3>AMULETO</h3>
-      <p id="amulet">TÚ</p>
-    </div>
+    </select>
 
   </div>
-
-  <div class="players" id="players"></div>
-
-  <div class="controls">
-
-    <button id="resolveBtn" style="display:none;">
-      RESOLVER RONDA
-    </button>
-
-  </div>
-
-  <div class="resultado" id="resultado"></div>
 
 </div>
+
+<div class="table">
+
+  <div class="table-ring" id="tableRing"></div>
+
+</div>
+
+<div class="controls">
+
+  <button
+    id="resolveBtn"
+    style="display:none;"
+  >
+    RESOLVER RONDA
+  </button>
+
+</div>
+
+<div class="hand" id="hand"></div>
+
+<div class="result" id="result"></div>
 
 <script>
 
@@ -615,64 +643,71 @@ button:hover{
    ESTADO
 ========================= */
 
-const players = [
+let players = [];
 
-  {
-    id:0,
-    name:"TÚ",
-    hp:10,
-    isBot:false,
-    played:[]
-  },
-
-  {
-    id:1,
-    name:"BOT 1",
-    hp:10,
-    isBot:true,
-    played:[]
-  },
-
-  {
-    id:2,
-    name:"BOT 2",
-    hp:10,
-    isBot:true,
-    played:[]
-  }
-
-];
+let phase = 1;
 
 let round = 1;
-let phase = 1;
-let amuletIndex = 0;
 
-const playersDiv =
-document.getElementById("players");
+const tableRing =
+document.getElementById("tableRing");
 
-const resultDiv =
-document.getElementById("resultado");
+const hand =
+document.getElementById("hand");
+
+const result =
+document.getElementById("result");
 
 const resolveBtn =
 document.getElementById("resolveBtn");
 
 /* =========================
-   CARTAS
+   CREAR PARTIDA
 ========================= */
 
-const teamCards = [
-  "Algas",
-  "Corales"
-];
+function createGame(count){
 
-const signCards = [
-  "+",
-  "-"
-];
+  players = [];
 
-const valueCards = [
-  1,2,3,4,5
-];
+  for(let i=0;i<count;i++){
+
+    players.push({
+
+      id:i,
+
+      name:
+        i===0
+        ? "TÚ"
+        : "BOT " + i,
+
+      hp:10,
+
+      played:[],
+
+      bot:i!==0
+
+    });
+
+  }
+
+  phase = 1;
+
+  round = 1;
+
+  render();
+
+}
+
+document.getElementById("playerCount")
+.addEventListener("change", e=>{
+
+  createGame(
+    parseInt(e.target.value)
+  );
+
+});
+
+createGame(5);
 
 /* =========================
    RENDER
@@ -680,47 +715,51 @@ const valueCards = [
 
 function render(){
 
-  document.getElementById("round")
-  .innerText = round;
+  tableRing.innerHTML = "";
 
-  document.getElementById("phase")
-  .innerText = phase + " / 3";
+  const alive =
+    players.filter(p=>p.hp>0);
 
-  document.getElementById("amulet")
-  .innerText =
-    players[amuletIndex].name;
+  const total =
+    alive.length;
 
-  playersDiv.innerHTML = "";
+  const radius = 300;
 
-  players.forEach(player=>{
+  alive.forEach((player,index)=>{
+
+    const angle =
+      (Math.PI*2/total)*index
+      - Math.PI/2;
+
+    const x =
+      350 + Math.cos(angle)*radius;
+
+    const y =
+      350 + Math.sin(angle)*radius;
 
     const div =
       document.createElement("div");
 
-    div.className =
-      "player " +
-      (player.isBot ? "" : "you") +
-      (player.hp <= 0 ? " dead" : "");
+    div.className = "player";
+
+    div.style.left = x + "px";
+    div.style.top = y + "px";
 
     div.innerHTML = `
 
-      <div class="player-header">
-
-        <div class="player-name">
-          ${player.name}
-        </div>
-
-        <div class="hp">
-          ${Math.max(0,player.hp)} HP
-        </div>
-
+      <div class="player-name">
+        ${player.name}
       </div>
 
-      <div class="table">
+      <div class="player-hp">
+        ${player.hp} HP
+      </div>
+
+      <div class="cards">
 
         ${player.played.map(card=>`
 
-          <div class="played-card">
+          <div class="played">
             ${card}
           </div>
 
@@ -728,17 +767,13 @@ function render(){
 
       </div>
 
-      ${
-        !player.isBot && player.hp > 0
-        ? renderHand(player)
-        : ""
-      }
-
     `;
 
-    playersDiv.appendChild(div);
+    tableRing.appendChild(div);
 
   });
+
+  renderHand();
 
 }
 
@@ -746,82 +781,92 @@ function render(){
    MANO
 ========================= */
 
-function renderHand(player){
+function renderHand(){
 
-  let cards = [];
+  const you = players[0];
 
-  if(!player.played.some(c=>c==="Algas"||c==="Corales")){
+  if(you.hp <= 0){
 
-    cards.push(...teamCards);
-
-  }
-
-  if(!player.played.some(c=>c==="+"||c==="-" )){
-
-    cards.push(...signCards);
-
-  }
-
-  const alreadyValues =
-    player.played.filter(c=>!isNaN(c));
-
-  if(alreadyValues.length === 0){
-
-    cards.push(...valueCards);
-
-  }
-
-  return `
-
-    <div class="hand-title">
-      ELEGIR CARTA
-    </div>
-
-    <div class="hand">
-
-      ${cards.map(card=>`
-
-        <div
-          class="card"
-          onclick="playCard('${card}')"
-        >
-          ${card}
-        </div>
-
-      `).join("")}
-
-    </div>
-
-  `;
-
-}
-
-/* =========================
-   JUGAR CARTA
-========================= */
-
-function playCard(card){
-
-  const player = players[0];
-
-  if(player.played.length >= 3){
+    hand.innerHTML = "";
     return;
+
   }
 
-  player.played.push(card);
+  if(you.played.length >= 3){
 
-  botsPlay();
-
-  phase++;
-
-  if(phase > 3){
-
-    phase = 3;
+    hand.innerHTML = "";
 
     resolveBtn.style.display =
       "inline-block";
 
+    return;
+
   }
+
+  resolveBtn.style.display = "none";
+
+  const used =
+    [...you.played];
+
+  let options = [];
+
+  if(
+    !used.includes("Algas") &&
+    !used.includes("Corales")
+  ){
+
+    options.push(
+      "Algas",
+      "Corales"
+    );
+
+  }
+
+  if(
+    !used.includes("+") &&
+    !used.includes("-")
+  ){
+
+    options.push("+","-");
+
+  }
+
+  const alreadyValue =
+    used.some(v=>!isNaN(v));
+
+  if(!alreadyValue){
+
+    options.push(1,2,3,4,5);
+
+  }
+
+  hand.innerHTML =
+    options.map(card=>`
+
+      <div
+        class="card"
+        onclick="playCard('${card}')"
+      >
+        ${card}
+      </div>
+
+    `).join("");
+
+}
+
+/* =========================
+   JUGAR
+========================= */
+
+function playCard(card){
+
+  const you = players[0];
+
+  you.played.push(card);
+
+  botsPlay();
+
+  phase++;
 
   render();
 
@@ -835,40 +880,50 @@ function botsPlay(){
 
   players.forEach(player=>{
 
-    if(!player.isBot || player.hp <= 0){
+    if(!player.bot || player.hp<=0){
       return;
     }
 
-    if(player.played.length >= phase){
-      return;
-    }
+    let used =
+      [...player.played];
 
     let options = [];
 
-    if(!player.played.some(c=>c==="Algas"||c==="Corales")){
+    if(
+      !used.includes("Algas") &&
+      !used.includes("Corales")
+    ){
 
-      options.push(...teamCards);
+      options.push(
+        "Algas",
+        "Corales"
+      );
 
     }
 
-    if(!player.played.some(c=>c==="+"||c==="-" )){
+    if(
+      !used.includes("+") &&
+      !used.includes("-")
+    ){
 
-      options.push(...signCards);
+      options.push("+","-");
 
     }
 
-    const hasValue =
-      player.played.some(c=>!isNaN(c));
+    const alreadyValue =
+      used.some(v=>!isNaN(v));
 
-    if(!hasValue){
+    if(!alreadyValue){
 
-      options.push(...valueCards);
+      options.push(1,2,3,4,5);
 
     }
 
     const pick =
       options[
-        Math.floor(Math.random()*options.length)
+        Math.floor(
+          Math.random()*options.length
+        )
       ];
 
     player.played.push(pick);
@@ -888,21 +943,44 @@ resolveBtn.addEventListener(
 
 function resolveRound(){
 
-  resolveBtn.style.display = "none";
-
   const alive =
-    players.filter(p=>p.hp > 0);
+    players.filter(p=>p.hp>0);
+
+  if(alive.length <= 2){
+
+    result.innerHTML = `
+
+      <div class="result-box">
+
+        <div class="final">
+          LA SIMULACIÓN FINALIZA
+        </div>
+
+      </div>
+
+    `;
+
+    hand.innerHTML = "";
+
+    resolveBtn.style.display =
+      "none";
+
+    return;
+
+  }
 
   const parsed = alive.map(p=>{
 
     const team =
       p.played.find(c=>
-        c==="Algas" || c==="Corales"
+        c==="Algas" ||
+        c==="Corales"
       );
 
     const sign =
       p.played.find(c=>
-        c==="+" || c==="-" 
+        c==="+" ||
+        c==="-"
       );
 
     const value =
@@ -928,54 +1006,19 @@ function resolveRound(){
   });
 
   const algas =
-    parsed.filter(p=>p.team==="Algas");
+    parsed.filter(
+      p=>p.team==="Algas"
+    );
 
   const corales =
-    parsed.filter(p=>p.team==="Corales");
-
-  if(
-    algas.length === 0 ||
-    corales.length === 0
-  ){
-
-    resultDiv.innerHTML = `
-
-      <div class="bloque">
-
-        <h2>RESULTADO</h2>
-
-        <p>
-          Todos eligieron el mismo equipo.
-        </p>
-
-      </div>
-
-      <div class="evento">
-        La ronda se reinicia.
-      </div>
-
-    `;
-
-    nextRound();
-    return;
-
-  }
+    parsed.filter(
+      p=>p.team==="Corales"
+    );
 
   let mayoria;
   let minoria;
 
-  const amuletTeam =
-    parsed.find(
-      p=>p.ref.id===amuletIndex
-    )?.team;
-
-  if(
-    algas.length > corales.length ||
-    (
-      algas.length === corales.length &&
-      amuletTeam === "Algas"
-    )
-  ){
+  if(algas.length > corales.length){
 
     mayoria = algas;
     minoria = corales;
@@ -1020,55 +1063,11 @@ function resolveRound(){
     tornado = true;
 
     dañoHacia =
-      dañoHacia === "Mayoría"
+      dañoHacia==="Mayoría"
       ? "Minoría"
       : "Mayoría";
 
   }
-
-  let html = `
-
-    <div class="bloque">
-
-      <h2>MAYORÍA</h2>
-
-      <p>
-        ${mayoria[0].team}
-      </p>
-
-    </div>
-
-    <div class="bloque">
-
-      <h2>MINORÍA</h2>
-
-      <p>
-        ${minoria[0].team}
-      </p>
-
-    </div>
-
-    <div class="bloque">
-
-      <h2>SUMA MAYORÍA</h2>
-
-      <p>
-        ${sumaMayoriaReal}
-      </p>
-
-    </div>
-
-    <div class="bloque">
-
-      <h2>SUMA MINORÍA</h2>
-
-      <p>
-        ${sumaMinoriaReal}
-      </p>
-
-    </div>
-
-  `;
 
   if(sumaMayoria === 0){
 
@@ -1082,23 +1081,10 @@ function resolveRound(){
 
     });
 
-    html += `
-
-      <div class="evento">
-
-        MAREA ACTIVADA
-        <br><br>
-
-        La Minoría recupera 2 HP.
-
-      </div>
-
-    `;
-
   }else{
 
     const target =
-      dañoHacia === "Mayoría"
+      dañoHacia==="Mayoría"
       ? mayoria
       : minoria;
 
@@ -1108,63 +1094,43 @@ function resolveRound(){
 
     });
 
-    if(tornado){
+  }
 
-      html += `
+  result.innerHTML = `
 
-        <div class="evento">
+    <div class="result-box">
 
-          TORNADO ACTIVADO
-          <br><br>
+      <div class="result-title">
+        RESULTADO
+      </div>
 
-          La Minoría altera el resultado.
+      <div class="result-text">
 
-        </div>
-
-      `;
-
-    }
-
-    html += `
-
-      <div class="bloque">
-
-        <h2>RESULTADO FINAL</h2>
-
-        <p>
-          La ${dañoHacia}
-          recibe ${sumaMayoria}
-          de daño.
-        </p>
+        ${
+          sumaMayoria === 0
+          ? "La Minoría recupera 2 HP."
+          : `La ${dañoHacia} recibe ${sumaMayoria} de daño.`
+        }
 
       </div>
 
-    `;
+      ${
+        tornado
+        ? `
+          <div class="event">
+            Tornado activado.
+          </div>
+        `
+        : ""
+      }
 
-  }
+    </div>
 
-  resultDiv.innerHTML = html;
-
-  const stillAlive =
-    players.filter(p=>p.hp > 0);
-
-  if(stillAlive.length <= 1){
-
-    resultDiv.innerHTML += `
-
-      <div class="final">
-        SIMULACIÓN FINALIZADA
-      </div>
-
-    `;
-
-    render();
-
-    return;
-
-  }
+  `;
 
   setTimeout(()=>{
+
+    result.innerHTML = "";
 
     nextRound();
 
@@ -1178,33 +1144,19 @@ function resolveRound(){
 
 function nextRound(){
 
-  players.forEach(player=>{
+  players.forEach(p=>{
 
-    player.played = [];
+    p.played = [];
 
   });
 
-  round++;
-
   phase = 1;
 
-  amuletIndex++;
-
-  if(amuletIndex >= players.length){
-
-    amuletIndex = 0;
-
-  }
+  round++;
 
   render();
 
 }
-
-/* =========================
-   INICIO
-========================= */
-
-render();
 
 </script>
 
