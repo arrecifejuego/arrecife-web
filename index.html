@@ -3,10 +3,10 @@
 
 <head>
 
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>Arrecife — Simulación Viva</title>
+<title>Arrecife — Ronda</title>
 
 <style>
 
@@ -21,42 +21,78 @@ html,body{
   height:100%;
   overflow:hidden;
   background:#000;
-  font-family:Arial,sans-serif;
+  font-family:Arial, sans-serif;
   color:white;
 }
 
+body{
+  position:relative;
+}
+
 /* =========================
-   FONDO
+   OCEANO
 ========================= */
 
-body::before{
-  content:"";
+.ocean{
   position:fixed;
   inset:0;
+  overflow:hidden;
+}
+
+.wave{
+
+  position:absolute;
+
+  width:180%;
+  height:180%;
+
+  left:-40%;
+  top:-40%;
 
   background:
     radial-gradient(
       circle at center,
-      rgba(126,231,255,0.06),
-      transparent 65%
+      rgba(126,231,255,0.03),
+      transparent 60%
     );
 
-  animation:breath 8s ease-in-out infinite;
-}
-
-@keyframes breath{
-
-  0%{ opacity:0.35; }
-  50%{ opacity:0.7; }
-  100%{ opacity:0.35; }
+  animation:rotateWave 60s linear infinite;
 
 }
+
+.wave2{
+  animation-duration:100s;
+  opacity:0.5;
+  transform:scale(1.2);
+}
+
+.wave3{
+  animation-duration:140s;
+  opacity:0.25;
+  transform:scale(1.5);
+}
+
+@keyframes rotateWave{
+
+  from{
+    transform:rotate(0deg);
+  }
+
+  to{
+    transform:rotate(360deg);
+  }
+
+}
+
+/* =========================
+   PARTICULAS
+========================= */
 
 .particles{
   position:fixed;
   inset:0;
-  pointer-events:none;
   overflow:hidden;
+  pointer-events:none;
 }
 
 .particles span{
@@ -72,11 +108,11 @@ body::before{
 
   opacity:0.08;
 
-  animation:float linear infinite;
+  animation:floatParticle linear infinite;
 
 }
 
-@keyframes float{
+@keyframes floatParticle{
 
   from{
     transform:translateY(100vh);
@@ -89,25 +125,61 @@ body::before{
 }
 
 /* =========================
+   UI
+========================= */
+
+.ui{
+  position:relative;
+  z-index:2;
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:40px;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+}
+
+.player-info{
+  text-align:center;
+  opacity:0.85;
+}
+
+.player-name{
+  font-size:11px;
+  letter-spacing:4px;
+  opacity:0.5;
+  margin-bottom:8px;
+}
+
+.hp{
+  font-size:20px;
+  margin-bottom:6px;
+}
+
+.estado{
+  font-size:10px;
+  letter-spacing:3px;
+  opacity:0.35;
+}
+
+/* =========================
    MESA
 ========================= */
 
-.table{
-
-  position:relative;
-
-  width:100%;
-  height:100%;
-
+.table-area{
+  flex:1;
   display:flex;
   justify-content:center;
   align-items:center;
-
+  position:relative;
 }
 
-.center{
-
-  position:absolute;
+.circle{
 
   width:420px;
   height:420px;
@@ -118,184 +190,82 @@ body::before{
     1px solid rgba(126,231,255,0.08);
 
   box-shadow:
-    0 0 60px rgba(126,231,255,0.05);
+    0 0 80px rgba(126,231,255,0.04);
+
+  position:relative;
 
 }
 
-/* =========================
-   JUGADORES
-========================= */
-
-.player{
+.revealed{
 
   position:absolute;
 
-  width:170px;
+  width:120px;
+  height:170px;
 
-  text-align:center;
+  border:
+    1px solid rgba(255,255,255,0.14);
 
-  transition:0.4s;
+  background:
+    rgba(255,255,255,0.02);
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  backdrop-filter:blur(8px);
+
+  transition:0.6s;
 
 }
 
-.player-name{
-
+.revealed-title{
+  font-size:10px;
   letter-spacing:3px;
-
-  font-size:11px;
-
-  opacity:0.65;
-
-  margin-bottom:10px;
-
+  opacity:0.5;
+  margin-bottom:14px;
 }
 
-.hp{
-
-  font-size:28px;
-
-  margin-bottom:10px;
-
-  opacity:0.9;
-
+.revealed-value{
+  font-size:42px;
 }
 
-.state{
-
-  font-size:11px;
-
-  opacity:0.35;
-
-  letter-spacing:2px;
-
-}
-
-.top-left{
-  top:80px;
-  left:18%;
-}
-
-.top-right{
-  top:80px;
-  right:18%;
-}
-
-.bottom{
-  bottom:40px;
+.you{
+  bottom:-60px;
   left:50%;
   transform:translateX(-50%);
 }
 
+.bot1{
+  top:30px;
+  left:-40px;
+}
+
+.bot2{
+  top:30px;
+  right:-40px;
+}
+
 /* =========================
-   CARTAS CENTRALES
+   LOG
 ========================= */
 
-.play-area{
+.log{
 
   position:absolute;
 
-  width:500px;
-  height:300px;
+  bottom:230px;
 
-}
+  width:100%;
 
-.played-card{
-
-  position:absolute;
-
-  width:110px;
-  height:150px;
-
-  border:
-    1px solid rgba(126,231,255,0.22);
-
-  background:
-    rgba(255,255,255,0.03);
-
-  backdrop-filter:blur(5px);
-
-  display:flex;
-  justify-content:center;
-  align-items:center;
-
-  flex-direction:column;
-
-  transition:0.6s;
-
-  opacity:0;
-
-  transform:
-    scale(0.8)
-    translateY(20px);
-
-  box-shadow:
-    0 0 25px rgba(126,231,255,0.08);
-
-}
-
-.played-card.show{
-
-  opacity:1;
-
-  transform:
-    scale(1)
-    translateY(0);
-
-}
-
-.played-card .team{
+  text-align:center;
 
   font-size:12px;
 
-  letter-spacing:2px;
+  letter-spacing:3px;
 
-  opacity:0.55;
-
-  margin-bottom:10px;
-
-}
-
-.played-card .value{
-
-  font-size:42px;
-
-}
-
-.played-card .sign{
-
-  margin-top:8px;
-
-  opacity:0.7;
-
-}
-
-/* posiciones */
-
-.card-bot1{
-  left:70px;
-  top:30px;
-}
-
-.card-bot2{
-  right:70px;
-  top:30px;
-}
-
-.card-you{
-  left:50%;
-  bottom:0;
-  transform:
-    translateX(-50%)
-    scale(0.8)
-    translateY(20px);
-}
-
-.card-you.show{
-
-  transform:
-    translateX(-50%)
-    scale(1)
-    translateY(0);
+  opacity:0.5;
 
 }
 
@@ -305,15 +275,12 @@ body::before{
 
 .hand{
 
-  position:absolute;
-
-  bottom:20px;
-
-  width:100%;
-
   display:flex;
   justify-content:center;
-  gap:12px;
+  flex-wrap:wrap;
+  gap:14px;
+
+  padding-bottom:25px;
 
 }
 
@@ -326,99 +293,51 @@ body::before{
     1px solid rgba(255,255,255,0.12);
 
   background:
-    rgba(255,255,255,0.03);
+    rgba(255,255,255,0.02);
+
+  cursor:pointer;
+
+  transition:0.3s;
 
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
 
-  cursor:pointer;
+  position:relative;
 
-  transition:0.3s;
-
-  backdrop-filter:blur(5px);
+  overflow:hidden;
 
 }
 
 .card:hover{
 
   transform:
-    translateY(-10px);
+    translateY(-8px);
 
-  border-color:#7ee7ff;
+  border-color:
+    rgba(126,231,255,0.6);
 
   box-shadow:
-    0 0 30px rgba(126,231,255,0.18);
+    0 0 25px rgba(126,231,255,0.15);
 
 }
 
-.card .team{
-
-  font-size:11px;
-  letter-spacing:2px;
-  opacity:0.5;
-  margin-bottom:8px;
-
-}
-
-.card .value{
-  font-size:34px;
-}
-
-.card .sign{
-  margin-top:8px;
-  opacity:0.7;
-}
-
-/* =========================
-   MENSAJES
-========================= */
-
-.message{
-
-  position:absolute;
-
-  top:50%;
-
-  left:50%;
-
-  transform:translate(-50%,-50%);
-
-  text-align:center;
-
-  opacity:0;
-
-  transition:1.2s;
-
+.card.used{
+  opacity:0.15;
   pointer-events:none;
-
+  transform:scale(0.9);
 }
 
-.message.show{
-  opacity:0.65;
-}
-
-.message .big{
-
-  font-size:30px;
-
-  margin-bottom:15px;
-
-  letter-spacing:4px;
-
-}
-
-.message .small{
-
-  font-size:13px;
-
-  opacity:0.6;
-
+.card-type{
+  font-size:10px;
   letter-spacing:2px;
+  opacity:0.45;
+  margin-bottom:12px;
+}
 
-  line-height:1.8;
-
+.card-value{
+  font-size:24px;
 }
 
 /* =========================
@@ -430,10 +349,10 @@ body::before{
   position:absolute;
 
   top:50%;
-
   left:50%;
 
-  transform:translate(-50%,-50%);
+  transform:
+    translate(-50%,-50%);
 
   text-align:center;
 
@@ -441,53 +360,48 @@ body::before{
 
   transition:1s;
 
+  pointer-events:none;
+
 }
 
 .result.show{
   opacity:1;
 }
 
-.result h2{
+.result-title{
 
-  font-weight:normal;
+  font-size:12px;
 
   letter-spacing:5px;
 
-  margin-bottom:18px;
-
   opacity:0.5;
+
+  margin-bottom:25px;
 
 }
 
-.result p{
+.result-text{
 
-  font-size:30px;
+  font-size:32px;
 
   line-height:1.6;
 
 }
 
-/* =========================
-   MOBILE
-========================= */
-
 @media(max-width:900px){
 
-  .top-left{
-    left:5%;
+  .circle{
+    width:300px;
+    height:300px;
   }
 
-  .top-right{
-    right:5%;
+  .revealed{
+    width:90px;
+    height:130px;
   }
 
-  .card{
-    width:70px;
-    height:110px;
-  }
-
-  .card .value{
-    font-size:24px;
+  .revealed-value{
+    font-size:28px;
   }
 
 }
@@ -498,130 +412,79 @@ body::before{
 
 <body>
 
-<div class="particles" id="particles"></div>
+<div class="ocean">
 
-<div class="table">
-
-  <div class="center"></div>
-
-  <!-- jugadores -->
-
-  <div class="player top-left">
-
-    <div class="player-name">
-      ECO
-    </div>
-
-    <div class="hp" id="hpBot1">
-      5 HP
-    </div>
-
-    <div class="state" id="stateBot1">
-      OBSERVANDO
-    </div>
-
-  </div>
-
-  <div class="player top-right">
-
-    <div class="player-name">
-      MAREA
-    </div>
-
-    <div class="hp" id="hpBot2">
-      5 HP
-    </div>
-
-    <div class="state" id="stateBot2">
-      ESPERANDO
-    </div>
-
-  </div>
-
-  <div class="player bottom">
-
-    <div class="player-name">
-      VOS
-    </div>
-
-    <div class="hp" id="hpYou">
-      5 HP
-    </div>
-
-    <div class="state">
-      ELIGIENDO
-    </div>
-
-  </div>
-
-  <!-- cartas -->
-
-  <div class="play-area" id="playArea"></div>
-
-  <!-- mensajes -->
-
-  <div class="message" id="message">
-
-    <div class="big" id="messageBig">
-      EL MAR OBSERVA
-    </div>
-
-    <div class="small" id="messageSmall">
-      Cada decisión altera el grupo.
-    </div>
-
-  </div>
-
-  <!-- resultado -->
-
-  <div class="result" id="result"></div>
+  <div class="wave"></div>
+  <div class="wave wave2"></div>
+  <div class="wave wave3"></div>
 
 </div>
 
-<!-- mano -->
+<div class="particles" id="particles"></div>
 
-<div class="hand" id="hand"></div>
+<div class="ui">
+
+  <div class="top">
+
+    <div class="player-info">
+
+      <div class="player-name">
+        ECO
+      </div>
+
+      <div class="hp" id="hpBot1">
+        30 HP
+      </div>
+
+      <div class="estado">
+        OBSERVANDO
+      </div>
+
+    </div>
+
+    <div class="player-info">
+
+      <div class="player-name">
+        MAREA
+      </div>
+
+      <div class="hp" id="hpBot2">
+        30 HP
+      </div>
+
+      <div class="estado">
+        ESPERANDO
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="table-area">
+
+    <div class="circle">
+
+      <div class="revealed bot1" id="bot1Card"></div>
+
+      <div class="revealed bot2" id="bot2Card"></div>
+
+      <div class="revealed you" id="youCard"></div>
+
+    </div>
+
+    <div class="result" id="result"></div>
+
+  </div>
+
+  <div class="log" id="log">
+    PRIMERA REVELACIÓN
+  </div>
+
+  <div class="hand" id="hand"></div>
+
+</div>
 
 <script>
-
-/* =========================
-   SONIDOS
-========================= */
-
-const audioCtx =
-new (window.AudioContext ||
-window.webkitAudioContext)();
-
-function playTone(freq,duration=0.12,volume=0.03){
-
-  const osc =
-    audioCtx.createOscillator();
-
-  const gain =
-    audioCtx.createGain();
-
-  osc.type = "sine";
-
-  osc.frequency.value = freq;
-
-  gain.gain.value = volume;
-
-  osc.connect(gain);
-
-  gain.connect(audioCtx.destination);
-
-  osc.start();
-
-  gain.gain.exponentialRampToValueAtTime(
-    0.0001,
-    audioCtx.currentTime + duration
-  );
-
-  osc.stop(
-    audioCtx.currentTime + duration
-  );
-
-}
 
 /* =========================
    PARTICULAS
@@ -630,15 +493,12 @@ function playTone(freq,duration=0.12,volume=0.03){
 const particles =
 document.getElementById("particles");
 
-for(let i=0;i<60;i++){
+for(let i=0;i<45;i++){
 
   const p =
     document.createElement("span");
 
   p.style.left =
-    Math.random()*100 + "%";
-
-  p.style.top =
     Math.random()*100 + "%";
 
   p.style.animationDuration =
@@ -647,454 +507,257 @@ for(let i=0;i<60;i++){
   p.style.animationDelay =
     (-Math.random()*50) + "s";
 
+  p.style.opacity =
+    Math.random()*0.12;
+
   particles.appendChild(p);
 
 }
 
 /* =========================
-   VARIABLES
+   DATOS
 ========================= */
 
-const hand =
-document.getElementById("hand");
+const hand = [
 
-const playArea =
-document.getElementById("playArea");
+  { type:"Equipo", value:"Algas" },
+  { type:"Equipo", value:"Corales" },
 
-const result =
-document.getElementById("result");
+  { type:"Signo", value:"+" },
+  { type:"Signo", value:"-" },
 
-const message =
-document.getElementById("message");
+  { type:"Valor", value:"1" },
+  { type:"Valor", value:"2" },
+  { type:"Valor", value:"3" }
 
-let hpYou = 5;
-let hpBot1 = 5;
-let hpBot2 = 5;
+];
+
+let round = 1;
+
+const yourPlayed = [];
+const bot1Played = [];
+const bot2Played = [];
 
 /* =========================
-   CREAR CARTAS
+   RENDER
 ========================= */
 
-function generateCards(){
+function renderHand(){
 
-  hand.innerHTML = "";
+  const handDiv =
+    document.getElementById("hand");
 
-  const cards = [];
+  handDiv.innerHTML = "";
 
-  ["Algas","Corales"].forEach(team=>{
+  hand.forEach((card,index)=>{
 
-    ["+","-"].forEach(sign=>{
-
-      for(let i=1;i<=3;i++){
-
-        cards.push({
-          team,
-          sign,
-          value:i
-        });
-
-      }
-
-    });
-
-  });
-
-  cards.forEach(c=>{
-
-    const el =
+    const div =
       document.createElement("div");
 
-    el.className = "card";
+    div.className = "card";
 
-    el.innerHTML = `
+    if(card.used){
 
-      <div class="team">
-        ${c.team}
+      div.classList.add("used");
+
+    }
+
+    div.innerHTML = `
+
+      <div class="card-type">
+        ${card.type}
       </div>
 
-      <div class="value">
-        ${c.value}
-      </div>
-
-      <div class="sign">
-        ${c.sign}
+      <div class="card-value">
+        ${card.value}
       </div>
 
     `;
 
-    el.onclick = ()=>{
+    div.onclick = ()=>{
 
-      playTone(220);
+      if(card.used) return;
 
-      playRound(c);
+      playCard(index);
 
     };
 
-    hand.appendChild(el);
+    handDiv.appendChild(div);
 
   });
 
 }
 
-generateCards();
+renderHand();
 
 /* =========================
-   IA
+   JUGAR
 ========================= */
 
-function randomBot(){
+function playCard(index){
 
-  const teams =
-    ["Algas","Corales"];
+  const card = hand[index];
 
-  const signs =
-    ["+","-"];
+  card.used = true;
 
-  return {
+  yourPlayed.push(card);
 
-    team:
-      teams[Math.floor(Math.random()*2)],
-
-    sign:
-      signs[Math.floor(Math.random()*2)],
-
-    value:
-      Math.floor(Math.random()*3)+1
-
-  };
-
-}
-
-/* =========================
-   MOSTRAR CARTAS
-========================= */
-
-function showCard(data,cls){
-
-  const card =
-    document.createElement("div");
-
-  card.className =
-    "played-card " + cls;
-
-  card.innerHTML = `
-
-    <div class="team">
-      ${data.team}
-    </div>
-
-    <div class="value">
-      ${data.value}
-    </div>
-
-    <div class="sign">
-      ${data.sign}
-    </div>
-
-  `;
-
-  playArea.appendChild(card);
-
-  setTimeout(()=>{
-    card.classList.add("show");
-  },50);
-
-  return card;
-
-}
-
-/* =========================
-   MENSAJES
-========================= */
-
-function showMessage(big,small){
-
-  document.getElementById("messageBig")
-  .innerText = big;
-
-  document.getElementById("messageSmall")
-  .innerText = small;
-
-  message.classList.add("show");
-
-  setTimeout(()=>{
-    message.classList.remove("show");
-  },2400);
-
-}
-
-/* =========================
-   RONDA
-========================= */
-
-function playRound(playerCard){
-
-  hand.style.pointerEvents = "none";
-
-  playArea.innerHTML = "";
-
-  result.classList.remove("show");
-
-  showMessage(
-    "EL GRUPO SE DIVIDE",
-    "Las decisiones emergen lentamente."
+  revealCard(
+    "youCard",
+    card
   );
 
+  renderHand();
+
+  document.getElementById("log")
+  .innerText =
+    "LOS DEMÁS ESTÁN ELIGIENDO";
+
+  setTimeout(()=>{
+
+    botTurn();
+
+  },1200);
+
+}
+
+function botTurn(){
+
   const bot1 =
-    randomBot();
+    randomBotCard(bot1Played);
 
   const bot2 =
-    randomBot();
+    randomBotCard(bot2Played);
 
-  const cards = [
+  bot1Played.push(bot1);
+  bot2Played.push(bot2);
 
-    {
-      ...playerCard,
-      owner:"you"
-    },
+  revealCard(
+    "bot1Card",
+    bot1
+  );
 
-    {
-      ...bot1,
-      owner:"bot1"
-    },
+  revealCard(
+    "bot2Card",
+    bot2
+  );
 
-    {
-      ...bot2,
-      owner:"bot2"
-    }
+  if(round < 3){
+
+    round++;
+
+    const textos = [
+      "",
+      "SEGUNDA REVELACIÓN",
+      "REVELACIÓN FINAL"
+    ];
+
+    document.getElementById("log")
+    .innerText =
+      textos[round-1];
+
+  }else{
+
+    resolveRound();
+
+  }
+
+}
+
+function randomBotCard(played){
+
+  const possible = [
+
+    { type:"Equipo", value:"Algas" },
+    { type:"Equipo", value:"Corales" },
+
+    { type:"Signo", value:"+" },
+    { type:"Signo", value:"-" },
+
+    { type:"Valor", value:"1" },
+    { type:"Valor", value:"2" },
+    { type:"Valor", value:"3" }
 
   ];
 
-  setTimeout(()=>{
+  const available =
+    possible.filter(p=>
 
-    showCard(
-      playerCard,
-      "card-you"
+      !played.some(a=>
+
+        a.type===p.type &&
+        a.value===p.value
+
+      )
+
     );
 
-    playTone(180);
-
-  },500);
-
-  setTimeout(()=>{
-
-    showCard(
-      bot1,
-      "card-bot1"
-    );
-
-    playTone(150);
-
-  },1300);
-
-  setTimeout(()=>{
-
-    showCard(
-      bot2,
-      "card-bot2"
-    );
-
-    playTone(120);
-
-  },2200);
-
-  setTimeout(()=>{
-
-    resolveRound(cards);
-
-  },3500);
+  return available[
+    Math.floor(
+      Math.random()*available.length
+    )
+  ];
 
 }
 
 /* =========================
-   RESOLVER
+   VISUAL
 ========================= */
 
-function resolveRound(cards){
+function revealCard(id,card){
 
-  const algas =
-    cards.filter(c=>c.team==="Algas");
+  const el =
+    document.getElementById(id);
 
-  const corales =
-    cards.filter(c=>c.team==="Corales");
+  el.innerHTML = `
 
-  let mayoria =
-    algas.length >= corales.length
-    ? algas
-    : corales;
+    <div class="revealed-title">
+      ${card.type}
+    </div>
 
-  let minoria =
-    algas.length < corales.length
-    ? algas
-    : corales;
-
-  const sumMayoria =
-    Math.abs(
-      mayoria.reduce((a,b)=>
-        a + (
-          b.sign === "+"
-          ? b.value
-          : -b.value
-        ),0)
-    );
-
-  const sumMinoria =
-    Math.abs(
-      minoria.reduce((a,b)=>
-        a + (
-          b.sign === "+"
-          ? b.value
-          : -b.value
-        ),0)
-    );
-
-  let target =
-    sumMayoria > 3
-    ? mayoria
-    : minoria;
-
-  if(sumMinoria > sumMayoria){
-
-    target =
-      target === mayoria
-      ? minoria
-      : mayoria;
-
-    showMessage(
-      "TORNADO",
-      "La minoría altera el flujo."
-    );
-
-    playTone(90,0.4,0.05);
-
-  }
-
-  if(sumMayoria === 0){
-
-    showMessage(
-      "MAREA",
-      "La minoría recupera energía."
-    );
-
-    playTone(260,0.6,0.04);
-
-    result.innerHTML = `
-
-      <h2>
-        RESULTADO
-      </h2>
-
-      <p>
-        La Minoría recupera 2 HP
-      </p>
-
-    `;
-
-    result.classList.add("show");
-
-    hand.style.pointerEvents = "all";
-
-    return;
-
-  }
-
-  target.forEach(p=>{
-
-    if(p.owner === "you"){
-      hpYou -= sumMayoria;
-    }
-
-    if(p.owner === "bot1"){
-      hpBot1 -= sumMayoria;
-    }
-
-    if(p.owner === "bot2"){
-      hpBot2 -= sumMayoria;
-    }
-
-  });
-
-  updateHP();
-
-  result.innerHTML = `
-
-    <h2>
-      RESULTADO
-    </h2>
-
-    <p>
-      ${target === mayoria
-        ? "La Mayoría"
-        : "La Minoría"}
-      recibe
-      ${sumMayoria}
-      de daño
-    </p>
+    <div class="revealed-value">
+      ${card.value}
+    </div>
 
   `;
 
-  result.classList.add("show");
-
-  playTone(70,0.5,0.06);
-
-  checkEnd();
-
-  hand.style.pointerEvents = "all";
-
 }
 
 /* =========================
-   HP
+   RESOLUCION
 ========================= */
 
-function updateHP(){
+function resolveRound(){
 
-  document.getElementById("hpYou")
+  document.getElementById("log")
   .innerText =
-    Math.max(0,hpYou) + " HP";
+    "INTERPRETANDO EL MAR";
 
-  document.getElementById("hpBot1")
-  .innerText =
-    Math.max(0,hpBot1) + " HP";
+  const result =
+    document.getElementById("result");
 
-  document.getElementById("hpBot2")
-  .innerText =
-    Math.max(0,hpBot2) + " HP";
+  setTimeout(()=>{
 
-}
+    result.classList.add("show");
 
-/* =========================
-   FINAL
-========================= */
+    result.innerHTML = `
 
-function checkEnd(){
+      <div class="result-title">
+        RESULTADO
+      </div>
 
-  if(hpYou <= 0){
+      <div class="result-text">
+        La Minoría recibe 3 de daño.
+      </div>
 
-    showMessage(
-      "EL MAR TE ABSORBE",
-      "Toda decisión deja un eco."
-    );
+    `;
 
-  }
-
-  if(hpBot1 <= 0){
-
-    document.getElementById("stateBot1")
-    .innerText = "DISUELTO";
-
-  }
-
-  if(hpBot2 <= 0){
-
-    document.getElementById("stateBot2")
-    .innerText = "DISUELTO";
-
-  }
+  },1500);
 
 }
 
 </script>
 
 </body>
+
 </html>
