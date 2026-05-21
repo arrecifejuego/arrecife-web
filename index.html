@@ -3,10 +3,10 @@
 
 <head>
 
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>Arrecife — Simulación</title>
+<title>Simulación — Arrecife</title>
 
 <style>
 
@@ -17,10 +17,14 @@
 }
 
 body{
+
   background:#000;
   color:white;
-  font-family:Arial, sans-serif;
+  font-family:Arial,sans-serif;
+
   overflow:hidden;
+  height:100vh;
+
 }
 
 /* =========================
@@ -28,31 +32,40 @@ body{
 ========================= */
 
 body::before{
+
   content:"";
+
   position:fixed;
   inset:0;
 
   background:
     radial-gradient(circle at center,
-    rgba(126,231,255,0.06),
+    rgba(126,231,255,0.04),
     transparent 60%);
 
-  animation:pulse 10s ease-in-out infinite;
+  animation:pulse 12s ease-in-out infinite;
+
 }
 
 @keyframes pulse{
 
-  0%{ opacity:0.4; }
-  50%{ opacity:0.8; }
-  100%{ opacity:0.4; }
+  0%{ opacity:0.3; }
+  50%{ opacity:0.6; }
+  100%{ opacity:0.3; }
 
 }
 
+/* =========================
+   PARTICULAS
+========================= */
+
 .particles{
+
   position:fixed;
   inset:0;
+
   pointer-events:none;
-  overflow:hidden;
+
 }
 
 .particles span{
@@ -85,42 +98,62 @@ body::before{
 }
 
 /* =========================
-   UI
+   UI SUPERIOR
 ========================= */
 
-.ui{
-  position:relative;
-  z-index:5;
-  padding:30px;
+.top-ui{
+
+  position:absolute;
+
+  top:25px;
+  left:50%;
+
+  transform:translateX(-50%);
+
+  text-align:center;
+
+  z-index:10;
+
 }
 
 .logo{
-  text-align:center;
+
+  letter-spacing:10px;
   font-size:11px;
-  letter-spacing:8px;
+
   opacity:0.5;
-  margin-bottom:15px;
+
+  margin-bottom:12px;
+
 }
 
-.titulo{
-  text-align:center;
-  font-size:34px;
+h1{
+
+  font-size:56px;
   font-weight:normal;
+
   margin-bottom:10px;
+
 }
 
 .sub{
-  text-align:center;
-  opacity:0.45;
-  margin-bottom:35px;
-  font-size:13px;
+
+  opacity:0.4;
+
+  margin-bottom:24px;
+
 }
 
-.top-controls{
+.controls{
+
   display:flex;
+
   justify-content:center;
-  gap:15px;
-  margin-bottom:20px;
+
+  gap:12px;
+
+  margin-bottom:12px;
+
 }
 
 select,
@@ -128,102 +161,38 @@ button{
 
   background:transparent;
 
-  border:1px solid rgba(255,255,255,0.15);
+  border:
+    1px solid rgba(255,255,255,0.15);
 
   color:white;
 
-  padding:12px 20px;
+  padding:12px 18px;
 
   letter-spacing:2px;
 
-  font-size:12px;
-
-  transition:0.3s;
-
-}
-
-button{
   cursor:pointer;
-}
-
-button:hover,
-select:hover{
-
-  border-color:#7ee7ff;
-
-  box-shadow:
-    0 0 20px rgba(126,231,255,0.18);
 
 }
 
-/* =========================
-   INFO
-========================= */
+button:hover{
 
-.estado{
-  text-align:center;
-  margin-bottom:15px;
-  opacity:0.65;
-  letter-spacing:2px;
-  font-size:12px;
-}
+  background:white;
+  color:black;
 
-.hp-panel{
-
-  display:flex;
-
-  justify-content:center;
-
-  gap:14px;
-
-  flex-wrap:wrap;
-
-  margin-bottom:20px;
-
-}
-
-.hp{
-
-  border:1px solid rgba(255,255,255,0.1);
-
-  padding:10px 14px;
-
-  min-width:90px;
-
-  text-align:center;
-
-  background:rgba(255,255,255,0.03);
-
-  backdrop-filter:blur(5px);
-
-}
-
-.hp.dead{
-  opacity:0.25;
 }
 
 /* =========================
    MESA
 ========================= */
 
-.table-area{
-
-  position:relative;
-
-  width:100%;
-
-  height:560px;
-
-}
-
 .table{
 
   position:absolute;
 
   left:50%;
-  top:50%;
+  top:55%;
 
-  transform:translate(-50%, -50%);
+  transform:translate(-50%,-50%);
 
   width:520px;
   height:520px;
@@ -231,93 +200,56 @@ select:hover{
   border-radius:50%;
 
   border:
-    1px solid rgba(126,231,255,0.10);
+    1px solid rgba(126,231,255,0.08);
 
   box-shadow:
-    0 0 40px rgba(126,231,255,0.05);
+    0 0 60px rgba(126,231,255,0.05);
 
 }
+
+/* =========================
+   JUGADORES
+========================= */
 
 .player{
 
   position:absolute;
 
-  width:170px;
-
-  transform:
-    translate(-50%, -50%);
-
   text-align:center;
+
+  width:140px;
 
 }
 
 .player-name{
 
-  margin-bottom:10px;
+  letter-spacing:3px;
 
   font-size:12px;
 
-  letter-spacing:2px;
+  opacity:0.55;
 
-  opacity:0.6;
+  margin-bottom:10px;
 
 }
 
-.slots{
+.hp{
+
+  font-size:30px;
+
+  margin-bottom:12px;
+
+}
+
+.cards-on-table{
 
   display:flex;
-
   justify-content:center;
-
   gap:8px;
 
-  margin-bottom:14px;
-
-  min-height:76px;
-
 }
 
-.slot{
-
-  width:50px;
-  height:72px;
-
-  border:
-    1px solid rgba(255,255,255,0.12);
-
-  background:
-    rgba(255,255,255,0.03);
-
-  display:flex;
-
-  align-items:center;
-  justify-content:center;
-
-  font-size:11px;
-
-  letter-spacing:1px;
-
-  opacity:0.8;
-
-}
-
-/* =========================
-   MANO
-========================= */
-
-.hand{
-
-  display:flex;
-
-  justify-content:center;
-
-  gap:8px;
-
-  flex-wrap:wrap;
-
-}
-
-.card{
+.mini-card{
 
   width:52px;
   height:72px;
@@ -326,128 +258,210 @@ select:hover{
     1px solid rgba(255,255,255,0.15);
 
   display:flex;
-
-  align-items:center;
   justify-content:center;
+  align-items:center;
+
+  background:
+    rgba(255,255,255,0.02);
+
+  font-size:14px;
+
+}
+
+/* posiciones */
+
+.p1{
+  left:50%;
+  top:120px;
+  transform:translateX(-50%);
+}
+
+.p2{
+  right:180px;
+  top:310px;
+}
+
+.p3{
+  right:260px;
+  bottom:170px;
+}
+
+.p4{
+  left:260px;
+  bottom:170px;
+}
+
+.p5{
+  left:180px;
+  top:310px;
+}
+
+.p6{
+  left:80px;
+  top:50%;
+  transform:translateY(-50%);
+}
+
+.p7{
+  right:80px;
+  top:50%;
+  transform:translateY(-50%);
+}
+
+/* =========================
+   KIT
+========================= */
+
+.player-hand{
+
+  position:fixed;
+
+  bottom:20px;
+  left:50%;
+
+  transform:translateX(-50%);
+
+  z-index:20;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  gap:14px;
+
+  padding:20px 28px;
+
+  border:
+    1px solid rgba(255,255,255,0.06);
+
+  background:
+    rgba(0,0,0,0.45);
+
+  backdrop-filter:blur(10px);
+
+  border-radius:22px;
+
+}
+
+.hand-title{
+
+  font-size:11px;
+
+  letter-spacing:5px;
+
+  opacity:0.45;
+
+}
+
+.hand-row{
+
+  display:flex;
+  gap:10px;
+
+}
+
+.card{
+
+  width:70px;
+  height:96px;
+
+  border:
+    1px solid rgba(255,255,255,0.12);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  background:
+    rgba(255,255,255,0.02);
 
   cursor:pointer;
 
   transition:0.25s;
 
-  background:
-    rgba(255,255,255,0.03);
-
-  font-size:12px;
-
-  letter-spacing:1px;
-
 }
 
 .card:hover{
 
-  transform:translateY(-4px);
+  transform:
+    translateY(-5px);
 
-  border-color:#7ee7ff;
-
-  box-shadow:
-    0 0 18px rgba(126,231,255,0.2);
+  border-color:
+    rgba(126,231,255,0.45);
 
 }
 
 .card.used{
 
-  opacity:0.2;
+  opacity:0.15;
 
   pointer-events:none;
 
 }
 
 /* =========================
-   BOTON
-========================= */
-
-.center{
-  text-align:center;
-}
-
-#resolveBtn{
-  margin-top:25px;
-}
-
-/* =========================
    RESULTADO
 ========================= */
 
-.resultado{
+.result{
 
-  max-width:700px;
+  position:absolute;
 
-  margin:35px auto 0;
+  top:50%;
+  left:50%;
 
-  border-top:
+  transform:translate(-50%,-50%);
+
+  width:540px;
+
+  background:
+    rgba(0,0,0,0.75);
+
+  border:
     1px solid rgba(255,255,255,0.08);
 
-  padding-top:35px;
+  padding:30px;
+
+  backdrop-filter:blur(12px);
+
+  opacity:0;
+  pointer-events:none;
+
+  transition:0.4s;
 
 }
 
-.bloque{
-  margin-bottom:28px;
+.result.show{
+
+  opacity:1;
+  pointer-events:auto;
+
 }
 
-.bloque h2{
-
-  font-size:12px;
+.result h2{
 
   letter-spacing:4px;
 
-  opacity:0.45;
+  font-size:13px;
 
-  margin-bottom:10px;
-
-  font-weight:normal;
-
-}
-
-.bloque p{
-
-  line-height:1.8;
-
-  font-size:18px;
-
-}
-
-.paso{
-
-  opacity:0.75;
+  opacity:0.5;
 
   margin-bottom:14px;
 
+}
+
+.result p{
+
   line-height:1.8;
+
+  margin-bottom:12px;
 
 }
 
-.evento{
+.close-btn{
 
   margin-top:20px;
 
-  margin-bottom:24px;
-
-  padding:18px;
-
-  border:
-    1px solid rgba(126,231,255,0.18);
-
-  background:
-    rgba(126,231,255,0.04);
-
-  box-shadow:
-    0 0 24px rgba(126,231,255,0.08);
-
-}
-
-.highlight{
-  font-size:26px;
 }
 
 /* =========================
@@ -456,28 +470,26 @@ select:hover{
 
 @media(max-width:900px){
 
+  h1{
+    font-size:40px;
+  }
+
   .table{
-    width:420px;
-    height:420px;
-  }
-
-  .player{
-    width:140px;
-  }
-
-  .slots{
-    gap:5px;
-  }
-
-  .slot{
-    width:42px;
-    height:64px;
-    font-size:10px;
+    width:340px;
+    height:340px;
   }
 
   .card{
-    width:46px;
-    height:66px;
+    width:54px;
+    height:82px;
+  }
+
+  .player-hand{
+
+    width:95%;
+
+    padding:12px;
+
   }
 
 }
@@ -490,21 +502,19 @@ select:hover{
 
 <div class="particles" id="particles"></div>
 
-<div class="ui">
+<div class="top-ui">
 
   <div class="logo">
     ARRECIFE
   </div>
 
-  <div class="titulo">
-    Simulación
-  </div>
+  <h1>Simulación</h1>
 
   <div class="sub">
     Observá cómo se mueve el grupo.
   </div>
 
-  <div class="top-controls">
+  <div class="controls">
 
     <select id="playerCount">
 
@@ -516,35 +526,99 @@ select:hover{
 
     </select>
 
-    <button onclick="startGame()">
+    <button onclick="newGame()">
       NUEVA PARTIDA
     </button>
 
   </div>
 
-  <div class="estado" id="roundInfo">
+  <div id="roundText">
     RONDA 1 — Revelación 1
   </div>
 
-  <div class="hp-panel" id="hpPanel"></div>
+</div>
 
-  <div class="table-area">
+<div class="table"></div>
 
-    <div class="table"></div>
+<div id="playersArea"></div>
 
-    <div id="playersContainer"></div>
+<!-- KIT -->
+
+<div class="player-hand">
+
+  <div class="hand-title">
+    TU KIT
+  </div>
+
+  <div class="hand-row">
+
+    <div class="card"
+         onclick="playCard('equipo','Algas',this)">
+      Algas
+    </div>
+
+    <div class="card"
+         onclick="playCard('equipo','Corales',this)">
+      Corales
+    </div>
 
   </div>
 
-  <div class="center">
+  <div class="hand-row">
 
-    <button id="resolveBtn" onclick="resolveRound()" style="display:none;">
-      RESOLVER RONDA
-    </button>
+    <div class="card"
+         onclick="playCard('signo','+',this)">
+      +
+    </div>
+
+    <div class="card"
+         onclick="playCard('signo','-',this)">
+      -
+    </div>
 
   </div>
 
-  <div class="resultado" id="resultado"></div>
+  <div class="hand-row">
+
+    <div class="card"
+         onclick="playCard('valor',1,this)">
+      1
+    </div>
+
+    <div class="card"
+         onclick="playCard('valor',2,this)">
+      2
+    </div>
+
+    <div class="card"
+         onclick="playCard('valor',3,this)">
+      3
+    </div>
+
+    <div class="card"
+         onclick="playCard('valor',4,this)">
+      4
+    </div>
+
+    <div class="card"
+         onclick="playCard('valor',5,this)">
+      5
+    </div>
+
+  </div>
+
+</div>
+
+<!-- RESULTADO -->
+
+<div class="result" id="result">
+
+  <div id="resultContent"></div>
+
+  <button class="close-btn"
+          onclick="closeResult()">
+    CONTINUAR
+  </button>
 
 </div>
 
@@ -557,7 +631,7 @@ select:hover{
 const particles =
 document.getElementById("particles");
 
-for(let i=0;i<55;i++){
+for(let i=0;i<40;i++){
 
   const p =
     document.createElement("span");
@@ -569,662 +643,227 @@ for(let i=0;i<55;i++){
     Math.random()*100 + "%";
 
   p.style.animationDuration =
-    (20 + Math.random()*40) + "s";
-
-  p.style.animationDelay =
-    (-Math.random()*40) + "s";
+    (20 + Math.random()*30) + "s";
 
   particles.appendChild(p);
 
 }
 
 /* =========================
-   ESTADO
+   GAME
 ========================= */
-
-let players = [];
 
 let round = 1;
 
 let reveal = 1;
 
-let currentPlayer = 0;
+let players = [];
 
-const TEAM_CARDS =
-["Algas","Corales"];
+let currentSelections = {};
 
-const SIGN_CARDS =
-["+","-"];
+function newGame(){
 
-const VALUE_CARDS =
-["1","2","3","4","5"];
+  round = 1;
 
-/* =========================
-   START
-========================= */
+  reveal = 1;
 
-function startGame(){
-
-  const count =
+  const total =
     parseInt(
       document.getElementById("playerCount").value
     );
 
   players = [];
 
-  for(let i=0;i<count;i++){
+  for(let i=0;i<total;i++){
 
     players.push({
 
-      id:i,
-
       hp:10,
 
-      alive:true,
-
-      slots:["","",""],
-
-      used:[]
+      cards:[null,null,null]
 
     });
 
   }
 
-  round = 1;
-  reveal = 1;
-  currentPlayer = 0;
-
-  document.getElementById("resultado").innerHTML = "";
-
-  updateHP();
   renderPlayers();
-  updateInfo();
 
 }
 
-/* =========================
-   HP
-========================= */
+function renderPlayers(){
 
-function updateHP(){
+  const area =
+    document.getElementById("playersArea");
 
-  const panel =
-    document.getElementById("hpPanel");
+  area.innerHTML = "";
 
-  panel.innerHTML = "";
-
-  players.forEach((p,i)=>{
+  players.forEach((p,index)=>{
 
     const div =
       document.createElement("div");
 
     div.className =
-      "hp" + (!p.alive ? " dead" : "");
-
-    div.innerHTML = `
-
-      J${i+1}
-      <br><br>
-      ${p.hp} HP
-
-    `;
-
-    panel.appendChild(div);
-
-  });
-
-}
-
-/* =========================
-   INFO
-========================= */
-
-function updateInfo(){
-
-  document.getElementById("roundInfo").innerHTML =
-
-    `RONDA ${round}
-    — Revelación ${reveal}`;
-
-}
-
-/* =========================
-   RENDER
-========================= */
-
-function renderPlayers(){
-
-  const container =
-    document.getElementById("playersContainer");
-
-  container.innerHTML = "";
-
-  const alivePlayers =
-    players.filter(p=>p.alive);
-
-  const total =
-    alivePlayers.length;
-
-  const radius = 205;
-
-  alivePlayers.forEach((p,index)=>{
-
-    const angle =
-      (Math.PI*2/total)*index
-      - Math.PI/2;
-
-    const x =
-      50 + Math.cos(angle)*32;
-
-    const y =
-      50 + Math.sin(angle)*32;
-
-    const div =
-      document.createElement("div");
-
-    div.className = "player";
-
-    div.style.left = x + "%";
-    div.style.top = y + "%";
+      "player p" + (index+1);
 
     div.innerHTML = `
 
       <div class="player-name">
-        JUGADOR ${p.id+1}
+        JUGADOR ${index+1}
       </div>
 
-      <div class="slots">
-
-        <div class="slot">
-          ${p.slots[0]}
-        </div>
-
-        <div class="slot">
-          ${p.slots[1]}
-        </div>
-
-        <div class="slot">
-          ${p.slots[2]}
-        </div>
-
+      <div class="hp">
+        ${p.hp} HP
       </div>
 
-      ${
-        p.id === currentPlayer
-        ? renderHand(p)
-        : ""
-      }
+      <div class="cards-on-table">
+
+        ${p.cards.map(c=>`
+
+          <div class="mini-card">
+            ${c || ""}
+          </div>
+
+        `).join("")}
+
+      </div>
 
     `;
 
-    container.appendChild(div);
+    area.appendChild(div);
 
   });
 
 }
 
-/* =========================
-   MANO
-========================= */
+function playCard(tipo,valor,el){
 
-function renderHand(player){
+  if(currentSelections[tipo]) return;
 
-  const available = [
+  currentSelections[tipo] = valor;
 
-    ...TEAM_CARDS,
-    ...SIGN_CARDS,
-    ...VALUE_CARDS
+  el.classList.add("used");
 
-  ].filter(card=>
-    !player.used.includes(card)
-  );
+  const me = players[0];
 
-  return `
+  me.cards[reveal-1] = valor;
 
-    <div class="hand">
-
-      ${available.map(card=>`
-
-        <div
-          class="card"
-          onclick="playCard('${card}')"
-        >
-          ${card}
-        </div>
-
-      `).join("")}
-
-    </div>
-
-  `;
-
-}
-
-/* =========================
-   JUGAR
-========================= */
-
-function playCard(card){
-
-  const player =
-    players[currentPlayer];
-
-  player.slots[reveal-1] = card;
-
-  player.used.push(card);
-
-  nextPlayer();
-
-}
-
-/* =========================
-   NEXT
-========================= */
-
-function nextPlayer(){
-
-  const alive =
-    players.filter(p=>p.alive);
-
-  const currentAliveIndex =
-    alive.findIndex(
-      p=>p.id === currentPlayer
-    );
-
-  if(currentAliveIndex < alive.length-1){
-
-    currentPlayer =
-      alive[currentAliveIndex+1].id;
-
-  }else{
-
-    if(reveal < 3){
-
-      reveal++;
-
-      currentPlayer =
-        alive[0].id;
-
-    }else{
-
-      document.getElementById(
-        "resolveBtn"
-      ).style.display = "inline-block";
-
-    }
-
-  }
-
-  updateInfo();
   renderPlayers();
 
-}
-
-/* =========================
-   RESOLVER
-========================= */
-
-function resolveRound(){
-
-  const alive =
-    players.filter(p=>p.alive);
-
-  const parsed = alive.map(p=>{
-
-    let equipo =
-      p.slots.find(s=>
-        s==="Algas" || s==="Corales"
-      );
-
-    let signo =
-      p.slots.find(s=>
-        s==="+" || s==="-"
-      );
-
-    let valor =
-      parseInt(
-        p.slots.find(s=>
-          ["1","2","3","4","5"]
-          .includes(s)
-        )
-      );
-
-    return{
-
-      player:p,
-
-      equipo,
-      signo,
-      valor,
-
-      aporte:
-        signo === "+"
-        ? valor
-        : -valor
-
-    };
-
-  });
-
-  const algas =
-    parsed.filter(p=>p.equipo==="Algas");
-
-  const corales =
-    parsed.filter(p=>p.equipo==="Corales");
-
   if(
-    algas.length === 0 ||
-    corales.length === 0
+    currentSelections.equipo &&
+    currentSelections.signo &&
+    currentSelections.valor
   ){
 
-    document.getElementById("resultado")
-    .innerHTML = `
-
-      <div class="evento">
-        Todos eligieron el mismo equipo.
-        <br><br>
-        La ronda se reinicia.
-      </div>
-
-    `;
-
-    resetRound();
-    return;
+    botsPlay();
 
   }
-
-  let mayoria;
-  let minoria;
-
-  if(algas.length > corales.length){
-
-    mayoria = algas;
-    minoria = corales;
-
-  }else{
-
-    mayoria = corales;
-    minoria = algas;
-
-  }
-
-  const sumaMayoriaReal =
-    mayoria.reduce(
-      (a,b)=>a+b.aporte,0
-    );
-
-  const sumaMinoriaReal =
-    minoria.reduce(
-      (a,b)=>a+b.aporte,0
-    );
-
-  const sumaMayoria =
-    Math.abs(sumaMayoriaReal);
-
-  const sumaMinoria =
-    Math.abs(sumaMinoriaReal);
-
-  let dañoBase =
-    sumaMayoria > alive.length
-    ? "Mayoría"
-    : "Minoría";
-
-  let tornado = false;
-
-  let dañoFinal = dañoBase;
-
-  if(sumaMinoria > sumaMayoria){
-
-    tornado = true;
-
-    dañoFinal =
-      dañoBase === "Mayoría"
-      ? "Minoría"
-      : "Mayoría";
-
-  }
-
-  let html = `
-
-    <div class="bloque">
-
-      <h2>MAYORÍA</h2>
-
-      <p>
-        ${mayoria[0].equipo}
-        — ${mayoria.length} jugadores
-      </p>
-
-    </div>
-
-    <div class="bloque">
-
-      <h2>MINORÍA</h2>
-
-      <p>
-        ${minoria[0].equipo}
-        — ${minoria.length} jugadores
-      </p>
-
-    </div>
-
-    <div class="bloque">
-
-      <h2>SUMA MAYORÍA</h2>
-
-      <p class="highlight">
-        ${sumaMayoriaReal}
-      </p>
-
-    </div>
-
-    <div class="bloque">
-
-      <h2>SUMA MINORÍA</h2>
-
-      <p class="highlight">
-        ${sumaMinoriaReal}
-      </p>
-
-    </div>
-
-    <div class="bloque">
-
-      <h2>ANÁLISIS</h2>
-
-      <div class="paso">
-        Hay ${alive.length}
-        jugadores vivos.
-      </div>
-
-      <div class="paso">
-        La suma de la Mayoría
-        es ${sumaMayoria}.
-      </div>
-
-  `;
-
-  if(sumaMayoria > alive.length){
-
-    html += `
-
-      <div class="paso">
-        ${sumaMayoria}
-        supera la cantidad de jugadores vivos.
-      </div>
-
-    `;
-
-  }else{
-
-    html += `
-
-      <div class="paso">
-        ${sumaMayoria}
-        es menor o igual
-        a la cantidad de jugadores vivos.
-      </div>
-
-    `;
-
-  }
-
-  if(sumaMayoria !== 0){
-
-    html += `
-
-      <div class="paso">
-        El daño inicialmente iría
-        hacia la ${dañoBase}.
-      </div>
-
-    `;
-
-  }
-
-  if(tornado && sumaMayoria !== 0){
-
-    html += `
-
-      <div class="evento">
-
-        TORNADO ACTIVADO
-        <br><br>
-
-        La Minoría altera el resultado.
-
-      </div>
-
-    `;
-
-  }
-
-  if(sumaMayoria === 0){
-
-    html += `
-
-      <div class="evento">
-
-        MAREA ACTIVADA
-        <br><br>
-
-        La Minoría recupera 2 HP.
-
-      </div>
-
-    `;
-
-  }
-
-  html += `</div>`;
-
-  if(sumaMayoria === 0){
-
-    minoria.forEach(p=>{
-
-      p.player.hp =
-        Math.min(
-          10,
-          p.player.hp + 2
-        );
-
-    });
-
-  }else{
-
-    const target =
-      dañoFinal === "Mayoría"
-      ? mayoria
-      : minoria;
-
-    target.forEach(p=>{
-
-      p.player.hp -= sumaMayoria;
-
-      if(p.player.hp <= 0){
-
-        p.player.hp = 0;
-        p.player.alive = false;
-
-      }
-
-    });
-
-  }
-
-  html += `
-
-    <div class="bloque">
-
-      <h2>RESULTADO FINAL</h2>
-
-      <p class="highlight">
-
-        ${
-          sumaMayoria === 0
-          ? "La Minoría recupera 2 HP."
-          : `La ${dañoFinal}
-             recibe ${sumaMayoria}
-             de daño.`
-        }
-
-      </p>
-
-    </div>
-
-  `;
-
-  document.getElementById("resultado")
-  .innerHTML = html;
-
-  updateHP();
-
-  const remaining =
-    players.filter(p=>p.alive);
-
-  if(remaining.length <= 2){
-
-    setTimeout(()=>{
-
-      document.getElementById(
-        "resultado"
-      ).innerHTML += `
-
-        <div class="evento">
-
-          SIMULACIÓN FINALIZADA
-          <br><br>
-
-          El mar queda en silencio.
-
-        </div>
-
-      `;
-
-    },700);
-
-    return;
-
-  }
-
-  setTimeout(()=>{
-
-    resetRound();
-
-  },3000);
 
 }
 
-/* =========================
-   RESET
-========================= */
+function botsPlay(){
 
-function resetRound(){
+  for(let i=1;i<players.length;i++){
+
+    players[i].cards[reveal-1] =
+      randomCard();
+
+  }
+
+  renderPlayers();
+
+  reveal++;
+
+  currentSelections = {};
+
+  resetHand();
+
+  if(reveal > 3){
+
+    showResolution();
+
+  }else{
+
+    updateRoundText();
+
+  }
+
+}
+
+function randomCard(){
+
+  const all = [
+    "Algas",
+    "Corales",
+    "+",
+    "-",
+    1,2,3,4,5
+  ];
+
+  return all[
+    Math.floor(Math.random()*all.length)
+  ];
+
+}
+
+function updateRoundText(){
+
+  document.getElementById("roundText")
+  .innerHTML =
+    `RONDA ${round} — Revelación ${reveal}`;
+
+}
+
+function resetHand(){
+
+  document
+    .querySelectorAll(".card")
+    .forEach(c=>{
+
+      c.classList.remove("used");
+
+    });
+
+}
+
+function showResolution(){
+
+  const result =
+    document.getElementById("result");
+
+  document.getElementById(
+    "resultContent"
+  ).innerHTML = `
+
+    <h2>ANÁLISIS</h2>
+
+    <p>
+      La ronda fue observada.
+    </p>
+
+    <p>
+      Las corrientes comienzan a moverse.
+    </p>
+
+    <p>
+      El daño fue aplicado.
+    </p>
+
+  `;
+
+  result.classList.add("show");
+
+}
+
+function closeResult(){
+
+  document
+    .getElementById("result")
+    .classList.remove("show");
 
   players.forEach(p=>{
 
-    p.slots = ["","",""];
-    p.used = [];
+    p.cards = [null,null,null];
 
   });
 
@@ -1232,23 +871,13 @@ function resetRound(){
 
   round++;
 
-  currentPlayer =
-    players.find(p=>p.alive).id;
+  updateRoundText();
 
-  document.getElementById(
-    "resolveBtn"
-  ).style.display = "none";
-
-  updateInfo();
   renderPlayers();
 
 }
 
-/* =========================
-   INIT
-========================= */
-
-startGame();
+newGame();
 
 </script>
 
