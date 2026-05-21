@@ -3,10 +3,10 @@
 
 <head>
 
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>Simulación — Arrecife</title>
+<title>Arrecife — Simulación</title>
 
 <style>
 
@@ -16,19 +16,17 @@
   box-sizing:border-box;
 }
 
-body{
+html,body{
+  width:100%;
+  min-height:100%;
+}
 
+body{
   background:#000;
   color:white;
-
   font-family:Arial,sans-serif;
-
-  overflow:hidden;
-
-  height:100vh;
-
-  position:relative;
-
+  overflow-x:hidden;
+  min-height:100vh;
 }
 
 /* =========================
@@ -36,74 +34,101 @@ body{
 ========================= */
 
 body::before{
-
   content:"";
-
   position:fixed;
-
   inset:0;
 
   background:
+    radial-gradient(circle at center,
+    rgba(126,231,255,0.05),
+    transparent 60%);
 
+  animation:pulse 12s ease-in-out infinite;
+
+  pointer-events:none;
+}
+
+@keyframes pulse{
+
+  0%{
+    transform:scale(1);
+    opacity:0.5;
+  }
+
+  50%{
+    transform:scale(1.1);
+    opacity:0.8;
+  }
+
+  100%{
+    transform:scale(1);
+    opacity:0.5;
+  }
+
+}
+
+.ocean{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  z-index:0;
+  pointer-events:none;
+}
+
+.wave{
+
+  position:absolute;
+
+  width:200%;
+  height:200%;
+
+  left:-50%;
+  top:-50%;
+
+  background:
     radial-gradient(
       circle at center,
       rgba(126,231,255,0.04),
       transparent 60%
     );
 
-  animation:pulse 12s ease-in-out infinite;
+  animation:rotateWave 45s linear infinite;
 
 }
 
-@keyframes pulse{
+.wave2{
+  animation-duration:70s;
+  opacity:0.4;
+}
 
-  0%{ opacity:0.3; }
-  50%{ opacity:0.6; }
-  100%{ opacity:0.3; }
+.wave3{
+  animation-duration:100s;
+  opacity:0.2;
+}
+
+@keyframes rotateWave{
+
+  from{
+    transform:rotate(0deg);
+  }
+
+  to{
+    transform:rotate(360deg);
+  }
 
 }
 
 /* =========================
-   PARTICULAS
+   CONTAINER
 ========================= */
 
-.particles{
-
-  position:fixed;
-
-  inset:0;
-
-  pointer-events:none;
-
-}
-
-.particles span{
-
-  position:absolute;
-
-  width:2px;
-  height:2px;
-
-  background:white;
-
-  border-radius:50%;
-
-  opacity:0.08;
-
-  animation:float linear infinite;
-
-}
-
-@keyframes float{
-
-  from{
-    transform:translateY(100vh);
-  }
-
-  to{
-    transform:translateY(-120vh);
-  }
-
+.container{
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:1400px;
+  margin:auto;
+  padding:40px 20px 60px;
 }
 
 /* =========================
@@ -111,84 +136,64 @@ body::before{
 ========================= */
 
 .header{
-
-  position:absolute;
-
-  top:20px;
-
-  left:50%;
-
-  transform:translateX(-50%);
-
   text-align:center;
-
-  z-index:10;
-
+  margin-bottom:30px;
 }
 
 .logo{
-
   letter-spacing:10px;
-
   font-size:11px;
-
-  opacity:0.45;
-
-  margin-bottom:12px;
-
+  opacity:0.5;
+  margin-bottom:18px;
 }
 
 h1{
-
-  font-size:54px;
-
+  font-size:42px;
   font-weight:normal;
-
   margin-bottom:10px;
-
 }
 
 .sub{
-
   opacity:0.45;
-
-  margin-bottom:22px;
-
+  font-size:14px;
+  line-height:1.7;
 }
+
+/* =========================
+   CONTROLES
+========================= */
 
 .controls{
-
-  display:flex;
-
-  justify-content:center;
-
-  gap:12px;
-
+  text-align:center;
+  margin-bottom:25px;
 }
 
-select,
-button{
+select{
 
-  background:transparent;
+  appearance:none;
+  background:#050505;
+
+  color:white;
 
   border:
     1px solid rgba(255,255,255,0.15);
 
-  color:white;
+  padding:12px 20px;
 
-  padding:12px 18px;
-
-  letter-spacing:2px;
+  font-size:14px;
 
   cursor:pointer;
 
+  transition:0.3s;
+
 }
 
-button:hover{
+select:hover{
 
-  background:white;
+  border-color:#7ee7ff;
 
-  color:black;
+  box-shadow:
+    0 0 18px rgba(126,231,255,0.25);
 
 }
 
@@ -196,11 +201,9 @@ button:hover{
    MESA
 ========================= */
 
-.table-area{
+.mesa-wrapper{
 
-  position:absolute;
-
-  inset:0;
+  width:100%;
 
   display:flex;
 
@@ -208,69 +211,36 @@ button:hover{
 
   align-items:center;
 
-  padding-top:60px;
+  margin-top:20px;
+  margin-bottom:40px;
 
 }
 
-.table{
+.mesa{
 
-  position:relative;
+  width:650px;
+  height:650px;
 
-  width:420px;
-  height:420px;
+  max-width:90vw;
+  max-height:90vw;
 
   border-radius:50%;
 
-  border:
-    1px solid rgba(126,231,255,0.08);
+  position:relative;
 
   background:
-
     radial-gradient(
       circle at center,
-      rgba(126,231,255,0.03),
-      rgba(0,0,0,0.15)
+      rgba(126,231,255,0.06),
+      rgba(255,255,255,0.01)
     );
 
+  border:
+    1px solid rgba(255,255,255,0.06);
+
   box-shadow:
-    0 0 80px rgba(126,231,255,0.04);
-
-}
-
-/* =========================
-   CENTRO
-========================= */
-
-.center-info{
-
-  position:absolute;
-
-  left:50%;
-  top:50%;
-
-  transform:translate(-50%,-50%);
-
-  text-align:center;
-
-  width:260px;
-
-}
-
-.round-text{
-
-  font-size:24px;
-
-  margin-bottom:10px;
-
-}
-
-.phase-text{
-
-  letter-spacing:3px;
-
-  opacity:0.45;
-
-  font-size:11px;
+    inset 0 0 80px rgba(126,231,255,0.04),
+    0 0 60px rgba(126,231,255,0.05);
 
 }
 
@@ -284,33 +254,36 @@ button:hover{
 
   width:150px;
 
-  text-align:center;
+  transform:
+    translate(-50%,-50%);
 
-  transform:translate(-50%,-50%);
+  text-align:center;
 
 }
 
 .player-name{
 
-  letter-spacing:3px;
+  font-size:12px;
 
-  font-size:11px;
+  letter-spacing:2px;
 
-  opacity:0.45;
+  margin-bottom:8px;
 
-  margin-bottom:6px;
+  opacity:0.55;
 
 }
 
-.player-hp{
+.hp{
 
-  font-size:22px;
+  font-size:13px;
+
+  opacity:0.7;
 
   margin-bottom:10px;
 
 }
 
-.played-cards{
+.card-row{
 
   display:flex;
 
@@ -320,7 +293,7 @@ button:hover{
 
 }
 
-.slot{
+.card{
 
   width:42px;
   height:62px;
@@ -329,193 +302,212 @@ button:hover{
     1px solid rgba(255,255,255,0.12);
 
   background:
-    rgba(255,255,255,0.02);
+    rgba(255,255,255,0.03);
 
   display:flex;
 
-  justify-content:center;
   align-items:center;
-
-  font-size:12px;
-
-}
-
-/* =========================
-   POSICIONES
-========================= */
-
-.p1{
-  left:50%;
-  top:4%;
-}
-
-.p2{
-  left:82%;
-  top:28%;
-}
-
-.p3{
-  left:78%;
-  top:72%;
-}
-
-.p4{
-  left:50%;
-  top:95%;
-}
-
-.p5{
-  left:22%;
-  top:72%;
-}
-
-.p6{
-  left:18%;
-  top:28%;
-}
-
-.p7{
-  left:50%;
-  top:50%;
-}
-
-/* =========================
-   KIT
-========================= */
-
-.player-hand{
-
-  position:fixed;
-
-  bottom:18px;
-
-  left:50%;
-
-  transform:translateX(-50%);
-
-  width:420px;
-
-  padding:20px;
-
-  border-radius:26px;
-
-  border:
-    1px solid rgba(255,255,255,0.08);
-
-  background:
-    rgba(0,0,0,0.72);
-
-  backdrop-filter:blur(10px);
-
-  z-index:20;
-
-}
-
-.hand-title{
-
-  text-align:center;
-
-  margin-bottom:16px;
-
-  letter-spacing:4px;
+  justify-content:center;
 
   font-size:11px;
 
-  opacity:0.45;
+  letter-spacing:1px;
+
+  backdrop-filter:blur(4px);
+
+  transition:0.3s;
 
 }
 
-.hand-section{
+.card.revealed{
 
-  display:flex;
-
-  justify-content:center;
-
-  gap:10px;
-
-  margin-bottom:12px;
-
-}
-
-.card{
-
-  width:64px;
-  height:92px;
-
-  border:
-    1px solid rgba(255,255,255,0.14);
-
-  background:
-    rgba(255,255,255,0.02);
-
-  display:flex;
-
-  justify-content:center;
-  align-items:center;
-
-  cursor:pointer;
-
-  transition:0.25s;
-
-  user-select:none;
-
-}
-
-.card:hover{
-
-  transform:
-    translateY(-6px);
-
-  border-color:#7ee7ff;
+  border-color:
+    rgba(126,231,255,0.35);
 
   box-shadow:
-    0 0 18px rgba(126,231,255,0.15);
-
-}
-
-.card.used{
-
-  opacity:0.18;
-
-  pointer-events:none;
+    0 0 20px rgba(126,231,255,0.15);
 
 }
 
 /* =========================
-   ANALISIS
+   ZONA INFERIOR
 ========================= */
 
-.analysis{
+.bottom-ui{
 
-  position:fixed;
+  width:100%;
 
-  right:20px;
+  max-width:1000px;
 
-  top:50%;
+  margin:auto;
+}
 
-  transform:translateY(-50%);
-
-  width:320px;
-
-  max-height:75vh;
-
-  overflow:auto;
-
-  padding:24px;
+.tu-zona{
 
   border:
     1px solid rgba(255,255,255,0.08);
 
   background:
-    rgba(0,0,0,0.72);
+    rgba(255,255,255,0.02);
 
-  backdrop-filter:blur(10px);
+  padding:30px;
 
-  z-index:20;
+  margin-bottom:40px;
+
+  backdrop-filter:blur(6px);
 
 }
 
-.analysis h2{
+.kit-titulo{
+
+  text-align:center;
+
+  letter-spacing:4px;
+
+  font-size:12px;
+
+  opacity:0.55;
+
+  margin-bottom:25px;
+
+}
+
+.cartas-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
+  gap:20px;
+
+}
+
+.grupo{
+
+  border:
+    1px solid rgba(255,255,255,0.06);
+
+  padding:18px;
+
+  background:
+    rgba(255,255,255,0.02);
+
+}
+
+.grupo-label{
+
+  font-size:11px;
+
+  letter-spacing:3px;
+
+  opacity:0.4;
+
+  margin-bottom:15px;
+
+}
+
+.valores{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.carta-btn{
+
+  background:transparent;
+
+  border:
+    1px solid rgba(255,255,255,0.12);
+
+  color:white;
+
+  padding:10px 14px;
+
+  cursor:pointer;
+
+  transition:0.3s;
+
+  margin:4px;
+
+}
+
+.carta-btn:hover{
+
+  border-color:#7ee7ff;
+
+  color:#7ee7ff;
+
+  box-shadow:
+    0 0 15px rgba(126,231,255,0.15);
+
+}
+
+.seleccion-actual{
+
+  text-align:center;
+
+  margin-bottom:25px;
+
+  opacity:0.65;
+
+  line-height:1.8;
+
+}
+
+/* =========================
+   BOTON
+========================= */
+
+#resolverBtn{
+
+  display:block;
+
+  margin:30px auto 0;
+
+  background:transparent;
+
+  color:white;
+
+  border:
+    1px solid rgba(255,255,255,0.2);
+
+  padding:16px 40px;
+
+  letter-spacing:4px;
+
+  cursor:pointer;
+
+  transition:0.3s;
+
+}
+
+#resolverBtn:hover{
+
+  background:#7ee7ff;
+
+  color:black;
+
+}
+
+/* =========================
+   RESULTADO
+========================= */
+
+.resultado{
+
+  border-top:
+    1px solid rgba(255,255,255,0.08);
+
+  padding-top:40px;
+
+}
+
+.bloque{
+  margin-bottom:35px;
+}
+
+.bloque h2{
 
   font-size:12px;
 
@@ -523,23 +515,47 @@ button:hover{
 
   opacity:0.5;
 
-  margin-bottom:18px;
+  margin-bottom:14px;
 
-}
-
-.analysis p{
-
-  line-height:1.8;
-
-  margin-bottom:12px;
-
-  opacity:0.82;
+  font-weight:normal;
 
 }
 
 .highlight{
 
-  font-size:22px;
+  font-size:26px;
+
+  line-height:1.7;
+
+}
+
+.paso{
+
+  margin-bottom:14px;
+
+  opacity:0.72;
+
+  line-height:1.8;
+
+}
+
+.evento{
+
+  margin-top:20px;
+  margin-bottom:35px;
+
+  padding:18px;
+
+  border:
+    1px solid rgba(126,231,255,0.16);
+
+  background:
+    rgba(126,231,255,0.04);
+
+  box-shadow:
+    0 0 30px rgba(126,231,255,0.06);
+
+  line-height:1.8;
 
 }
 
@@ -547,29 +563,21 @@ button:hover{
    MOBILE
 ========================= */
 
-@media(max-width:900px){
+@media(max-width:800px){
 
-  .table{
-
-    width:300px;
-    height:300px;
-
+  .mesa{
+    width:92vw;
+    height:92vw;
   }
 
-  h1{
-    font-size:38px;
+  .player{
+    width:110px;
   }
 
-  .player-hand{
-
-    width:95%;
-
-  }
-
-  .analysis{
-
-    display:none;
-
+  .card{
+    width:32px;
+    height:50px;
+    font-size:9px;
   }
 
 }
@@ -580,23 +588,33 @@ button:hover{
 
 <body>
 
-<div class="particles" id="particles"></div>
+<div class="ocean">
 
-<div class="header">
+  <div class="wave"></div>
+  <div class="wave wave2"></div>
+  <div class="wave wave3"></div>
 
-  <div class="logo">
-    ARRECIFE
-  </div>
+</div>
 
-  <h1>Simulación</h1>
+<div class="container">
 
-  <div class="sub">
-    Observá cómo se mueve el grupo.
+  <div class="header">
+
+    <div class="logo">
+      ARRECIFE
+    </div>
+
+    <h1>Simulación</h1>
+
+    <div class="sub">
+      Observá cómo se mueve el grupo.
+    </div>
+
   </div>
 
   <div class="controls">
 
-    <select id="playerCount">
+    <select id="cantidadJugadores">
 
       <option value="3">3 jugadores</option>
       <option value="4">4 jugadores</option>
@@ -606,118 +624,553 @@ button:hover{
 
     </select>
 
-    <button onclick="newGame()">
-      NUEVA PARTIDA
-    </button>
+  </div>
+
+  <div class="mesa-wrapper">
+
+    <div class="mesa" id="mesa"></div>
 
   </div>
 
-</div>
+  <div class="bottom-ui">
 
-<div class="table-area">
+    <div class="tu-zona">
 
-  <div class="table">
-
-    <div class="center-info">
-
-      <div class="round-text" id="roundText">
-        RONDA 1
+      <div class="kit-titulo">
+        TU KIT
       </div>
 
-      <div class="phase-text" id="phaseText">
-        REVELACIÓN 1
+      <div class="seleccion-actual" id="seleccionActual">
+        Elegí una carta.
+      </div>
+
+      <div class="cartas-grid">
+
+        <div class="grupo">
+
+          <div class="grupo-label">
+            EQUIPO
+          </div>
+
+          <button class="carta-btn"
+          onclick="elegirCarta('equipo','Algas')">
+            Algas
+          </button>
+
+          <button class="carta-btn"
+          onclick="elegirCarta('equipo','Corales')">
+            Corales
+          </button>
+
+        </div>
+
+        <div class="grupo">
+
+          <div class="grupo-label">
+            SIGNO
+          </div>
+
+          <button class="carta-btn"
+          onclick="elegirCarta('signo','+')">
+            +
+          </button>
+
+          <button class="carta-btn"
+          onclick="elegirCarta('signo','-')">
+            -
+          </button>
+
+        </div>
+
+        <div class="grupo">
+
+          <div class="grupo-label">
+            VALOR
+          </div>
+
+          <div class="valores">
+
+            <button class="carta-btn"
+            onclick="elegirCarta('valor',1)">1</button>
+
+            <button class="carta-btn"
+            onclick="elegirCarta('valor',2)">2</button>
+
+            <button class="carta-btn"
+            onclick="elegirCarta('valor',3)">3</button>
+
+            <button class="carta-btn"
+            onclick="elegirCarta('valor',4)">4</button>
+
+            <button class="carta-btn"
+            onclick="elegirCarta('valor',5)">5</button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <button id="resolverBtn"
+      onclick="resolverRonda()">
+
+        RESOLVER RONDA
+
+      </button>
+
+    </div>
+
+    <div class="resultado" id="resultado"></div>
+
+  </div>
+
+</div>
+
+<script>
+
+let cantidadJugadores = 5;
+
+let jugadores = [];
+
+let seleccionJugador = {};
+
+document.getElementById(
+  "cantidadJugadores"
+).addEventListener("change", e=>{
+
+  cantidadJugadores =
+    parseInt(e.target.value);
+
+  iniciar();
+
+});
+
+function iniciar(){
+
+  jugadores = [];
+
+  for(let i=0;i<cantidadJugadores;i++){
+
+    jugadores.push({
+
+      nombre:
+        i===0
+        ? "VOS"
+        : "BOT " + i,
+
+      hp:10,
+
+      equipo:null,
+      signo:null,
+      valor:null
+
+    });
+
+  }
+
+  renderMesa();
+
+}
+
+function renderMesa(){
+
+  const mesa =
+    document.getElementById("mesa");
+
+  mesa.innerHTML = "";
+
+  const radius = 250;
+
+  jugadores.forEach((j,index)=>{
+
+    const angle =
+      (Math.PI*2 / jugadores.length)
+      * index
+      - Math.PI/2;
+
+    const x =
+      325 + Math.cos(angle)*radius;
+
+    const y =
+      325 + Math.sin(angle)*radius;
+
+    const div =
+      document.createElement("div");
+
+    div.className = "player";
+
+    div.style.left = x + "px";
+    div.style.top = y + "px";
+
+    div.innerHTML = `
+
+      <div class="player-name">
+        ${j.nombre}
+      </div>
+
+      <div class="hp">
+        ${j.hp} HP
+      </div>
+
+      <div class="card-row">
+
+        <div class="card revealed">
+          ${j.equipo || "?"}
+        </div>
+
+        <div class="card revealed">
+          ${j.signo || "?"}
+        </div>
+
+        <div class="card revealed">
+          ${j.valor || "?"}
+        </div>
+
+      </div>
+
+    `;
+
+    mesa.appendChild(div);
+
+  });
+
+}
+
+function elegirCarta(tipo,valor){
+
+  seleccionJugador[tipo] = valor;
+
+  document.getElementById(
+    "seleccionActual"
+  ).innerHTML = `
+
+    Equipo:
+    ${seleccionJugador.equipo || "?"}
+
+    <br>
+
+    Signo:
+    ${seleccionJugador.signo || "?"}
+
+    <br>
+
+    Valor:
+    ${seleccionJugador.valor || "?"}
+
+  `;
+
+}
+
+function resolverRonda(){
+
+  if(
+    !seleccionJugador.equipo ||
+    !seleccionJugador.signo ||
+    !seleccionJugador.valor
+  ){
+
+    alert(
+      "Tenés que elegir las 3 cartas."
+    );
+
+    return;
+
+  }
+
+  jugadores[0] = {
+
+    ...jugadores[0],
+
+    ...seleccionJugador
+
+  };
+
+  for(let i=1;i<jugadores.length;i++){
+
+    jugadores[i].equipo =
+      Math.random() > 0.5
+      ? "Algas"
+      : "Corales";
+
+    jugadores[i].signo =
+      Math.random() > 0.5
+      ? "+"
+      : "-";
+
+    jugadores[i].valor =
+      Math.floor(Math.random()*5)+1;
+
+  }
+
+  renderMesa();
+
+  analizar();
+
+}
+
+function analizar(){
+
+  const vivos =
+    jugadores.filter(j=>j.hp>0);
+
+  const algas =
+    vivos.filter(j=>j.equipo==="Algas");
+
+  const corales =
+    vivos.filter(j=>j.equipo==="Corales");
+
+  if(
+    algas.length===0 ||
+    corales.length===0
+  ){
+
+    document.getElementById(
+      "resultado"
+    ).innerHTML = `
+
+      <div class="evento">
+
+        Todos eligieron el mismo equipo.
+        <br>
+        La ronda se reinicia.
+
+      </div>
+
+    `;
+
+    resetRonda();
+
+    return;
+
+  }
+
+  let mayoria;
+  let minoria;
+
+  if(algas.length > corales.length){
+
+    mayoria = algas;
+    minoria = corales;
+
+  }else{
+
+    mayoria = corales;
+    minoria = algas;
+
+  }
+
+  const sumaMayoriaReal =
+    mayoria.reduce((a,b)=>{
+
+      return a +
+      (
+        b.signo === "+"
+        ? b.valor
+        : -b.valor
+      );
+
+    },0);
+
+  const sumaMinoriaReal =
+    minoria.reduce((a,b)=>{
+
+      return a +
+      (
+        b.signo === "+"
+        ? b.valor
+        : -b.valor
+      );
+
+    },0);
+
+  const sumaMayoria =
+    Math.abs(sumaMayoriaReal);
+
+  const sumaMinoria =
+    Math.abs(sumaMinoriaReal);
+
+  let dañoBase;
+
+  if(sumaMayoria > vivos.length){
+
+    dañoBase = "Mayoría";
+
+  }else{
+
+    dañoBase = "Minoría";
+
+  }
+
+  let tornado = false;
+
+  let dañoFinal = dañoBase;
+
+  if(sumaMinoria > sumaMayoria){
+
+    tornado = true;
+
+    dañoFinal =
+      dañoBase === "Mayoría"
+      ? "Minoría"
+      : "Mayoría";
+
+  }
+
+  let html = `
+
+    <div class="bloque">
+
+      <h2>ANÁLISIS</h2>
+
+      <div class="paso">
+        Hay ${vivos.length} jugadores vivos.
+      </div>
+
+      <div class="paso">
+        Suma Mayoría:
+        ${sumaMayoriaReal}
+      </div>
+
+      <div class="paso">
+        Suma Minoría:
+        ${sumaMinoriaReal}
       </div>
 
     </div>
 
-    <div id="playersArea"></div>
+  `;
 
-  </div>
+  if(tornado){
 
-</div>
+    html += `
 
-<div class="player-hand">
+      <div class="evento">
 
-  <div class="hand-title">
-    TU KIT
-  </div>
+        TORNADO ACTIVADO
+        <br><br>
 
-  <div class="hand-section">
+        La Minoría altera el resultado.
 
-    <div class="card"
-         onclick="playCard('equipo','Algas',this)">
-      Algas
-    </div>
+      </div>
 
-    <div class="card"
-         onclick="playCard('equipo','Corales',this)">
-      Corales
-    </div>
+    `;
 
-  </div>
+  }
 
-  <div class="hand-section">
+  if(sumaMayoria === 0){
 
-    <div class="card"
-         onclick="playCard('signo','+',this)">
-      +
-    </div>
+    html += `
 
-    <div class="card"
-         onclick="playCard('signo','-',this)">
-      −
-    </div>
+      <div class="evento">
 
-  </div>
+        MAREA ACTIVADA
+        <br><br>
 
-  <div class="hand-section">
+        La Minoría recupera 2 HP.
 
-    <div class="card"
-         onclick="playCard('valor',1,this)">
-      1
-    </div>
+      </div>
 
-    <div class="card"
-         onclick="playCard('valor',2,this)">
-      2
-    </div>
+    `;
 
-    <div class="card"
-         onclick="playCard('valor',3,this)">
-      3
-    </div>
+    minoria.forEach(j=>{
 
-    <div class="card"
-         onclick="playCard('valor',4,this)">
-      4
-    </div>
+      j.hp =
+        Math.min(10,j.hp+2);
 
-    <div class="card"
-         onclick="playCard('valor',5,this)">
-      5
-    </div>
+    });
 
-  </div>
+  }else{
 
-  <button
-    style="width:100%; margin-top:10px;"
-    onclick="resolverRonda()"
-    id="resolveBtn">
+    const objetivo =
+      dañoFinal === "Mayoría"
+      ? mayoria
+      : minoria;
 
-    RESOLVER RONDA
+    objetivo.forEach(j=>{
 
-  </button>
+      j.hp -= sumaMayoria;
 
-</div>
+    });
 
-<div class="analysis" id="analysis">
+    html += `
 
-  <h2>ANÁLISIS</h2>
+      <div class="bloque">
 
-  <div id="analysisContent">
+        <h2>RESULTADO FINAL</h2>
 
-    Esperando resolución...
+        <p class="highlight">
 
-  </div>
+          La ${dañoFinal}
+          recibe
+          ${sumaMayoria}
+          de daño.
 
-</div>
+        </p>
+
+      </div>
+
+    `;
+
+  }
+
+  document.getElementById(
+    "resultado"
+  ).innerHTML = html;
+
+  jugadores =
+    jugadores.filter(j=>j.hp>0);
+
+  if(jugadores.length <= 2){
+
+    document.getElementById(
+      "resultado"
+    ).innerHTML += `
+
+      <div class="evento">
+
+        SIMULACIÓN FINALIZADA
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+  setTimeout(()=>{
+
+    resetRonda();
+
+    renderMesa();
+
+  },1500);
+
+}
+
+function resetRonda(){
+
+  seleccionJugador = {};
+
+  jugadores.forEach(j=>{
+
+    j.equipo = null;
+    j.signo = null;
+    j.valor = null;
+
+  });
+
+  document.getElementById(
+    "seleccionActual"
+  ).innerHTML = `
+    Elegí una carta.
+  `;
+
+}
+
+iniciar();
+
+</script>
+
+</body>
+</html>
