@@ -20,10 +20,14 @@ body{
 
   background:#000;
   color:white;
+
   font-family:Arial,sans-serif;
 
   overflow:hidden;
+
   height:100vh;
+
+  position:relative;
 
 }
 
@@ -36,12 +40,16 @@ body::before{
   content:"";
 
   position:fixed;
+
   inset:0;
 
   background:
-    radial-gradient(circle at center,
-    rgba(126,231,255,0.04),
-    transparent 60%);
+
+    radial-gradient(
+      circle at center,
+      rgba(126,231,255,0.04),
+      transparent 60%
+    );
 
   animation:pulse 12s ease-in-out infinite;
 
@@ -62,6 +70,7 @@ body::before{
 .particles{
 
   position:fixed;
+
   inset:0;
 
   pointer-events:none;
@@ -98,14 +107,15 @@ body::before{
 }
 
 /* =========================
-   UI SUPERIOR
+   HEADER
 ========================= */
 
-.top-ui{
+.header{
 
   position:absolute;
 
-  top:25px;
+  top:20px;
+
   left:50%;
 
   transform:translateX(-50%);
@@ -119,9 +129,10 @@ body::before{
 .logo{
 
   letter-spacing:10px;
+
   font-size:11px;
 
-  opacity:0.5;
+  opacity:0.45;
 
   margin-bottom:12px;
 
@@ -129,7 +140,8 @@ body::before{
 
 h1{
 
-  font-size:56px;
+  font-size:54px;
+
   font-weight:normal;
 
   margin-bottom:10px;
@@ -138,9 +150,9 @@ h1{
 
 .sub{
 
-  opacity:0.4;
+  opacity:0.45;
 
-  margin-bottom:24px;
+  margin-bottom:22px;
 
 }
 
@@ -151,8 +163,6 @@ h1{
   justify-content:center;
 
   gap:12px;
-
-  margin-bottom:12px;
 
 }
 
@@ -177,6 +187,7 @@ button{
 button:hover{
 
   background:white;
+
   color:black;
 
 }
@@ -185,25 +196,81 @@ button:hover{
    MESA
 ========================= */
 
-.table{
+.table-area{
 
   position:absolute;
 
-  left:50%;
-  top:55%;
+  inset:0;
 
-  transform:translate(-50%,-50%);
+  display:flex;
 
-  width:520px;
-  height:520px;
+  justify-content:center;
+
+  align-items:center;
+
+  padding-top:60px;
+
+}
+
+.table{
+
+  position:relative;
+
+  width:420px;
+  height:420px;
 
   border-radius:50%;
 
   border:
     1px solid rgba(126,231,255,0.08);
 
+  background:
+
+    radial-gradient(
+      circle at center,
+      rgba(126,231,255,0.03),
+      rgba(0,0,0,0.15)
+    );
+
   box-shadow:
-    0 0 60px rgba(126,231,255,0.05);
+    0 0 80px rgba(126,231,255,0.04);
+
+}
+
+/* =========================
+   CENTRO
+========================= */
+
+.center-info{
+
+  position:absolute;
+
+  left:50%;
+  top:50%;
+
+  transform:translate(-50%,-50%);
+
+  text-align:center;
+
+  width:260px;
+
+}
+
+.round-text{
+
+  font-size:24px;
+
+  margin-bottom:10px;
+
+}
+
+.phase-text{
+
+  letter-spacing:3px;
+
+  opacity:0.45;
+
+  font-size:11px;
 
 }
 
@@ -215,9 +282,11 @@ button:hover{
 
   position:absolute;
 
+  width:150px;
+
   text-align:center;
 
-  width:140px;
+  transform:translate(-50%,-50%);
 
 }
 
@@ -225,87 +294,89 @@ button:hover{
 
   letter-spacing:3px;
 
-  font-size:12px;
+  font-size:11px;
 
-  opacity:0.55;
+  opacity:0.45;
+
+  margin-bottom:6px;
+
+}
+
+.player-hp{
+
+  font-size:22px;
 
   margin-bottom:10px;
 
 }
 
-.hp{
-
-  font-size:30px;
-
-  margin-bottom:12px;
-
-}
-
-.cards-on-table{
+.played-cards{
 
   display:flex;
+
   justify-content:center;
-  gap:8px;
+
+  gap:6px;
 
 }
 
-.mini-card{
+.slot{
 
-  width:52px;
-  height:72px;
+  width:42px;
+  height:62px;
 
   border:
-    1px solid rgba(255,255,255,0.15);
-
-  display:flex;
-  justify-content:center;
-  align-items:center;
+    1px solid rgba(255,255,255,0.12);
 
   background:
     rgba(255,255,255,0.02);
 
-  font-size:14px;
+  display:flex;
+
+  justify-content:center;
+  align-items:center;
+
+  font-size:12px;
 
 }
 
-/* posiciones */
+/* =========================
+   POSICIONES
+========================= */
 
 .p1{
   left:50%;
-  top:120px;
-  transform:translateX(-50%);
+  top:4%;
 }
 
 .p2{
-  right:180px;
-  top:310px;
+  left:82%;
+  top:28%;
 }
 
 .p3{
-  right:260px;
-  bottom:170px;
+  left:78%;
+  top:72%;
 }
 
 .p4{
-  left:260px;
-  bottom:170px;
+  left:50%;
+  top:95%;
 }
 
 .p5{
-  left:180px;
-  top:310px;
+  left:22%;
+  top:72%;
 }
 
 .p6{
-  left:80px;
-  top:50%;
-  transform:translateY(-50%);
+  left:18%;
+  top:28%;
 }
 
 .p7{
-  right:80px;
+  left:50%;
   top:50%;
-  transform:translateY(-50%);
 }
 
 /* =========================
@@ -316,151 +387,159 @@ button:hover{
 
   position:fixed;
 
-  bottom:20px;
+  bottom:18px;
+
   left:50%;
 
   transform:translateX(-50%);
 
-  z-index:20;
+  width:420px;
 
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+  padding:20px;
 
-  gap:14px;
-
-  padding:20px 28px;
+  border-radius:26px;
 
   border:
-    1px solid rgba(255,255,255,0.06);
+    1px solid rgba(255,255,255,0.08);
 
   background:
-    rgba(0,0,0,0.45);
+    rgba(0,0,0,0.72);
 
   backdrop-filter:blur(10px);
 
-  border-radius:22px;
+  z-index:20;
 
 }
 
 .hand-title{
 
-  font-size:11px;
+  text-align:center;
 
-  letter-spacing:5px;
+  margin-bottom:16px;
+
+  letter-spacing:4px;
+
+  font-size:11px;
 
   opacity:0.45;
 
 }
 
-.hand-row{
+.hand-section{
 
   display:flex;
+
+  justify-content:center;
+
   gap:10px;
+
+  margin-bottom:12px;
 
 }
 
 .card{
 
-  width:70px;
-  height:96px;
+  width:64px;
+  height:92px;
 
   border:
-    1px solid rgba(255,255,255,0.12);
-
-  display:flex;
-  justify-content:center;
-  align-items:center;
+    1px solid rgba(255,255,255,0.14);
 
   background:
     rgba(255,255,255,0.02);
 
+  display:flex;
+
+  justify-content:center;
+  align-items:center;
+
   cursor:pointer;
 
   transition:0.25s;
+
+  user-select:none;
 
 }
 
 .card:hover{
 
   transform:
-    translateY(-5px);
+    translateY(-6px);
 
-  border-color:
-    rgba(126,231,255,0.45);
+  border-color:#7ee7ff;
+
+  box-shadow:
+    0 0 18px rgba(126,231,255,0.15);
 
 }
 
 .card.used{
 
-  opacity:0.15;
+  opacity:0.18;
 
   pointer-events:none;
 
 }
 
 /* =========================
-   RESULTADO
+   ANALISIS
 ========================= */
 
-.result{
+.analysis{
 
-  position:absolute;
+  position:fixed;
+
+  right:20px;
 
   top:50%;
-  left:50%;
 
-  transform:translate(-50%,-50%);
+  transform:translateY(-50%);
 
-  width:540px;
+  width:320px;
 
-  background:
-    rgba(0,0,0,0.75);
+  max-height:75vh;
+
+  overflow:auto;
+
+  padding:24px;
 
   border:
     1px solid rgba(255,255,255,0.08);
 
-  padding:30px;
+  background:
+    rgba(0,0,0,0.72);
 
-  backdrop-filter:blur(12px);
+  backdrop-filter:blur(10px);
 
-  opacity:0;
-  pointer-events:none;
-
-  transition:0.4s;
+  z-index:20;
 
 }
 
-.result.show{
+.analysis h2{
 
-  opacity:1;
-  pointer-events:auto;
-
-}
-
-.result h2{
+  font-size:12px;
 
   letter-spacing:4px;
 
-  font-size:13px;
-
   opacity:0.5;
 
-  margin-bottom:14px;
+  margin-bottom:18px;
 
 }
 
-.result p{
+.analysis p{
 
   line-height:1.8;
 
   margin-bottom:12px;
 
+  opacity:0.82;
+
 }
 
-.close-btn{
+.highlight{
 
-  margin-top:20px;
+  font-size:22px;
 
 }
 
@@ -470,25 +549,26 @@ button:hover{
 
 @media(max-width:900px){
 
-  h1{
-    font-size:40px;
-  }
-
   .table{
-    width:340px;
-    height:340px;
+
+    width:300px;
+    height:300px;
+
   }
 
-  .card{
-    width:54px;
-    height:82px;
+  h1{
+    font-size:38px;
   }
 
   .player-hand{
 
     width:95%;
 
-    padding:12px;
+  }
+
+  .analysis{
+
+    display:none;
 
   }
 
@@ -502,7 +582,7 @@ button:hover{
 
 <div class="particles" id="particles"></div>
 
-<div class="top-ui">
+<div class="header">
 
   <div class="logo">
     ARRECIFE
@@ -532,17 +612,29 @@ button:hover{
 
   </div>
 
-  <div id="roundText">
-    RONDA 1 — Revelación 1
+</div>
+
+<div class="table-area">
+
+  <div class="table">
+
+    <div class="center-info">
+
+      <div class="round-text" id="roundText">
+        RONDA 1
+      </div>
+
+      <div class="phase-text" id="phaseText">
+        REVELACIÓN 1
+      </div>
+
+    </div>
+
+    <div id="playersArea"></div>
+
   </div>
 
 </div>
-
-<div class="table"></div>
-
-<div id="playersArea"></div>
-
-<!-- KIT -->
 
 <div class="player-hand">
 
@@ -550,7 +642,7 @@ button:hover{
     TU KIT
   </div>
 
-  <div class="hand-row">
+  <div class="hand-section">
 
     <div class="card"
          onclick="playCard('equipo','Algas',this)">
@@ -564,7 +656,7 @@ button:hover{
 
   </div>
 
-  <div class="hand-row">
+  <div class="hand-section">
 
     <div class="card"
          onclick="playCard('signo','+',this)">
@@ -573,12 +665,12 @@ button:hover{
 
     <div class="card"
          onclick="playCard('signo','-',this)">
-      -
+      −
     </div>
 
   </div>
 
-  <div class="hand-row">
+  <div class="hand-section">
 
     <div class="card"
          onclick="playCard('valor',1,this)">
@@ -607,279 +699,25 @@ button:hover{
 
   </div>
 
-</div>
+  <button
+    style="width:100%; margin-top:10px;"
+    onclick="resolverRonda()"
+    id="resolveBtn">
 
-<!-- RESULTADO -->
+    RESOLVER RONDA
 
-<div class="result" id="result">
-
-  <div id="resultContent"></div>
-
-  <button class="close-btn"
-          onclick="closeResult()">
-    CONTINUAR
   </button>
 
 </div>
 
-<script>
+<div class="analysis" id="analysis">
 
-/* =========================
-   PARTICULAS
-========================= */
+  <h2>ANÁLISIS</h2>
 
-const particles =
-document.getElementById("particles");
+  <div id="analysisContent">
 
-for(let i=0;i<40;i++){
+    Esperando resolución...
 
-  const p =
-    document.createElement("span");
+  </div>
 
-  p.style.left =
-    Math.random()*100 + "%";
-
-  p.style.top =
-    Math.random()*100 + "%";
-
-  p.style.animationDuration =
-    (20 + Math.random()*30) + "s";
-
-  particles.appendChild(p);
-
-}
-
-/* =========================
-   GAME
-========================= */
-
-let round = 1;
-
-let reveal = 1;
-
-let players = [];
-
-let currentSelections = {};
-
-function newGame(){
-
-  round = 1;
-
-  reveal = 1;
-
-  const total =
-    parseInt(
-      document.getElementById("playerCount").value
-    );
-
-  players = [];
-
-  for(let i=0;i<total;i++){
-
-    players.push({
-
-      hp:10,
-
-      cards:[null,null,null]
-
-    });
-
-  }
-
-  renderPlayers();
-
-}
-
-function renderPlayers(){
-
-  const area =
-    document.getElementById("playersArea");
-
-  area.innerHTML = "";
-
-  players.forEach((p,index)=>{
-
-    const div =
-      document.createElement("div");
-
-    div.className =
-      "player p" + (index+1);
-
-    div.innerHTML = `
-
-      <div class="player-name">
-        JUGADOR ${index+1}
-      </div>
-
-      <div class="hp">
-        ${p.hp} HP
-      </div>
-
-      <div class="cards-on-table">
-
-        ${p.cards.map(c=>`
-
-          <div class="mini-card">
-            ${c || ""}
-          </div>
-
-        `).join("")}
-
-      </div>
-
-    `;
-
-    area.appendChild(div);
-
-  });
-
-}
-
-function playCard(tipo,valor,el){
-
-  if(currentSelections[tipo]) return;
-
-  currentSelections[tipo] = valor;
-
-  el.classList.add("used");
-
-  const me = players[0];
-
-  me.cards[reveal-1] = valor;
-
-  renderPlayers();
-
-  if(
-    currentSelections.equipo &&
-    currentSelections.signo &&
-    currentSelections.valor
-  ){
-
-    botsPlay();
-
-  }
-
-}
-
-function botsPlay(){
-
-  for(let i=1;i<players.length;i++){
-
-    players[i].cards[reveal-1] =
-      randomCard();
-
-  }
-
-  renderPlayers();
-
-  reveal++;
-
-  currentSelections = {};
-
-  resetHand();
-
-  if(reveal > 3){
-
-    showResolution();
-
-  }else{
-
-    updateRoundText();
-
-  }
-
-}
-
-function randomCard(){
-
-  const all = [
-    "Algas",
-    "Corales",
-    "+",
-    "-",
-    1,2,3,4,5
-  ];
-
-  return all[
-    Math.floor(Math.random()*all.length)
-  ];
-
-}
-
-function updateRoundText(){
-
-  document.getElementById("roundText")
-  .innerHTML =
-    `RONDA ${round} — Revelación ${reveal}`;
-
-}
-
-function resetHand(){
-
-  document
-    .querySelectorAll(".card")
-    .forEach(c=>{
-
-      c.classList.remove("used");
-
-    });
-
-}
-
-function showResolution(){
-
-  const result =
-    document.getElementById("result");
-
-  document.getElementById(
-    "resultContent"
-  ).innerHTML = `
-
-    <h2>ANÁLISIS</h2>
-
-    <p>
-      La ronda fue observada.
-    </p>
-
-    <p>
-      Las corrientes comienzan a moverse.
-    </p>
-
-    <p>
-      El daño fue aplicado.
-    </p>
-
-  `;
-
-  result.classList.add("show");
-
-}
-
-function closeResult(){
-
-  document
-    .getElementById("result")
-    .classList.remove("show");
-
-  players.forEach(p=>{
-
-    p.cards = [null,null,null];
-
-  });
-
-  reveal = 1;
-
-  round++;
-
-  updateRoundText();
-
-  renderPlayers();
-
-}
-
-newGame();
-
-</script>
-
-</body>
-</html>
+</div>
